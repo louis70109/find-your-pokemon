@@ -6,43 +6,52 @@ url = "https://wiki.52poke.com/zh-hant/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E5%88%97%E8%A
 r = requests.get(url=url)
 soup = BeautifulSoup(r.text, "html.parser")
 pokemon_table = soup.select('table')[1]
-pokemon_rows = pokemon_table.select('tr')[1003] # need loop
+pokemon_rows = pokemon_table.select('tr')[15] # need loop
 zh_name = pokemon_rows.select('td')[2].text
 
-message = '賽富豪'
+
+message = '巴大'
 reg = f"{message}.*"
 x = re.findall(reg, zh_name)
 print(x)
 
 if len(x) > 0:
   zh_name_url = pokemon_rows.select('td')[2].findChild('a')['href']
-  eng_name = pokemon_rows.select('td')[7].text
+  eng_name = pokemon_rows.select('td')[7].text.rstrip()
   poke_url = 'https://wiki.52poke.com'+zh_name_url
+  print('* Finding the pokemon image...')
+  poke_res = requests.get(url=poke_url)
+  poke_soup = BeautifulSoup(poke_res.text, "html.parser")
+
+  print('****************')
+  poke_img = poke_soup.select('table.roundy.bgwhite')[0].find('img')['data-url']
+  print('http:'+poke_img)
+
   print('------------------')
   print(zh_name)
   print(poke_url)
   print(eng_name)
   print('------------------')
+
 else:
   print('找不到')
 
 
+print('The Pokemon status is:')
 
+showdown = requests.get('https://play.pokemonshowdown.com/data/pokedex.json')
 
-poke_res = requests.get(url=poke_url)
-poke_soup = BeautifulSoup(poke_res.text, "html.parser")
-
-print('****************')
-
-hp = poke_soup.select('tr.bgl-HP')[0].select('div')[1].text
-attack = poke_soup.select('tr.bgl-攻击')[0].select('div')[1].text
-defense = poke_soup.select('tr.bgl-防御')[0].select('div')[1].text
-s_attack = poke_soup.select('tr.bgl-特攻')[0].select('div')[1].text
-s_defense =  poke_soup.select('tr.bgl-特防')[0].select('div')[1].text
-speed = poke_soup.select('tr.bgl-速度')[0].select('div')[1].text 
-print(hp)
-print(attack)
-print(defense)
-print(s_attack)
-print(s_defense)
-print(speed)
+pokemon_dict = showdown.json()[eng_name.lower()]
+print(pokemon_dict)
+# hp = poke_soup.select('tr.bgl-HP')[0].select('div')[1].text
+# attack = poke_soup.select('tr.bgl-攻击')[0].select('div')[1].text
+# defense = poke_soup.select('tr.bgl-防御')[0].select('div')[1].text
+# s_attack = poke_soup.select('tr.bgl-特攻')[0].select('div')[1].text
+# s_defense =  poke_soup.select('tr.bgl-特防')[0].select('div')[1].text
+# speed = poke_soup.select('tr.bgl-速度')[0].select('div')[1].text 
+# print(hp)
+# print(attack)
+# print(defense)
+# print(s_attack)
+# print(s_defense)
+# print(speed)
