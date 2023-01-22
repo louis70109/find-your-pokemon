@@ -30,7 +30,7 @@ ngrok http 8080
 
 2. 開另一個終端機
 
-```sh
+```shell
 sh change_bot_url.sh BOT_TOKEN https://NGROK_URL/webhooks/line
 ```
 
@@ -38,6 +38,12 @@ sh change_bot_url.sh BOT_TOKEN https://NGROK_URL/webhooks/line
 
 ```shell
 curl http://localhost:5000/
+```
+
+## 部署部署！！
+
+```shell
+gcloud run deploy nijia-cloud-run-example-1 --source .
 ```
 
 ## 想做還不知道怎麼做
