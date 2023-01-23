@@ -10,3 +10,5 @@ pytest-pep8
 pytest-cov
 mock
 requests
+gunicorn
+beautifulsoup4
