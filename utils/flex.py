@@ -1,3 +1,5 @@
+import urllib.parse
+from utils.poke_crawler import find_pokemon_name
 
 
 def specific_flex(
@@ -239,14 +241,114 @@ def specific_flex(
                     "paddingBottom": "27px",
                     "backgroundColor": "#27ACB2"
                 },
+                "footer": {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                        {
+                            "type": "button",
+                            "action": {
+                                "type": "message",
+                                "label": "細節",
+                                "text": f"find {name}"
+                            },
+                            "style": "primary"
+                        }
+                    ]
+                },
                 "styles": {
                     "header": {
                         "separator": False
                     },
-                    "footer": {
-                        "separator": False
-                    }
                 }
             }
         ]
+    }
+
+
+def skill_list(name="Pokemon", abilities: list[list] = [[]], url: str = 'https://google.com'):
+    contents = [{
+        "type": "text",
+        "text": name,
+        "wrap": True,
+        "weight": "bold",
+        "gravity": "center",
+        "size": "xl"
+    }]
+    for ability in abilities:
+        if name == '隊友':
+            pokemon = find_pokemon_name(ability[0])
+            action = {
+                "type": "message",
+                "label": "action",
+                "text": pokemon
+            }
+            item = pokemon
+        else:
+            action = {
+                "type": "uri",
+                "label": "action",
+                "uri": url
+            }
+            item = ability[0]
+        
+        if len(ability) == 2:
+            contents.append({
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [{
+                        "type": "text",
+                        "text": item,
+                        "color": "#aaaaaa",
+                        "size": "sm",
+                        "flex": 5,
+                    "action": action
+                }, {
+                    "type": "text",
+                    "text": ability[1],
+                    "wrap": True,
+                    "size": "sm",
+                    "color": "#666666",
+                    "flex": 5
+                }
+                ]
+            })
+        elif len(ability) == 3:
+            contents.append({
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [{
+                        "type": "text",
+                        "text": item,
+                        "color": "#aaaaaa",
+                        "size": "sm",
+                        "flex": 4,
+                        "wrap": True,
+                    "action": action
+                }, {
+                    "type": "text",
+                    "text": ability[1],
+                    "wrap": True,
+                    "size": "sm",
+                    "color": "#666666",
+                    "flex": 3
+                }, {
+                    "type": "text",
+                    "text": ability[2],
+                    "wrap": True,
+                    "size": "sm",
+                    "color": "#666666",
+                    "flex": 3
+                }]
+            })
+    return {
+        "type": "bubble",
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "md",
+            "contents": contents
+        }
     }
