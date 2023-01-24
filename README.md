@@ -5,7 +5,8 @@
 - 寶可夢 API:
   - [JSON](https://play.pokemonshowdown.com/data/pokedex.json)
   - [來源](https://github.com/smogon/pokemon-showdown-client/blob/master/WEB-API.md)
-
+- [招式對應清單](https://pokemon.fantasticmao.cn/pokemon/list)
+  - [GitHub 清單](https://github.com/fantasticmao/pokemon-wiki/blob/master/apiDoc/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3.md)
 ## 開發環境
 
 - Mac 12.5 (M2)
