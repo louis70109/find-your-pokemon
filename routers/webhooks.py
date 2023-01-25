@@ -12,7 +12,7 @@ from linebot.models import TextMessage, MessageEvent, FlexSendMessage, TextSendM
 from pydantic import BaseModel
 
 from utils.flex import skill_list, specific_flex
-from utils.poke_crawler import find_pokemon_image, pokemon_wiki
+from utils.poke_crawler import find_pokemon_image, pokemon_wiki, find_pokemon_name
 
 line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
 handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
@@ -97,6 +97,13 @@ def message_text(event):
                             f"SELECT name_zh, img_url FROM t_item WHERE name_en == '{it[0]}'")
                             it[0] = item_query[0]
                     logger.info('Item query result: '+ str(items))
+                elif index == 4:
+                    with sqlite.connect() as con:
+                        for it in items:
+                            item_query = sqlite.exec_one(con, 
+                            f"SELECT name_zh, effect FROM t_ability WHERE name_en == '{it[0]}'")
+                            it[0] = item_query[0]
+                    logger.info('Ability query result: '+ str(items))
                 elif index == 5: # 努力值, 長度==8
                     with sqlite.connect() as con:
                         for it in items:
@@ -117,15 +124,23 @@ def message_text(event):
         if pokemon_row_list is not None and len(pokemon_row_list) > 0:
             eng_name, poke_img = find_pokemon_image(pokemon_row_list)
             logger.info(poke_img)
-            logger.info('The Pokemon status is:')
+            with sqlite.connect() as con:
+                poke_query = sqlite.exec_one(con, 
+                f"SELECT idx, name_zh FROM t_pokemon WHERE name_en == '{eng_name}'")
+                logger.info("Specific Pokemon query from sqlite: "+str(poke_query))
+                poke_detail = sqlite.exec_one(con, 
+                """
+                SELECT * FROM t_pokemon_detail_base_stat WHERE idx == '{}'
+                """.format(poke_query.get("idx")))
+            logger.info('The Pokemon status is: '+str(poke_detail))
 
-            showdown = requests.get(
-                'https://play.pokemonshowdown.com/data/pokedex.json')
-            pokemon_dict = showdown.json()[eng_name.replace(' ', '').lower()]
-            logger.info(pokemon_dict)
-
+            Zh_name, _ = find_pokemon_name(eng_name)
+            # showdown = requests.get(
+            #     'https://play.pokemonshowdown.com/data/pokedex.json')
+            # pokemon_dict = showdown.json()[eng_name.replace(' ', '').lower()]
+            # logger.info(pokemon_dict)
             response_flex = specific_flex(
-                image=poke_img, name=pokemon_dict['name'], body=pokemon_dict['baseStats'])
+                image=poke_img, name=Zh_name, body=poke_detail)
             response = FlexSendMessage(
                 alt_text=eng_name, contents=response_flex)
         else:
