@@ -85,8 +85,8 @@ def message_text(event):
                         for it in items:
                             item_query = sqlite.exec_one(con, 
                             f"SELECT name_zh, category FROM t_move WHERE name_en == '{it[0]}'")
-                            it[0] = item_query[0]
-                            it[1] = item_query[1]
+                            it[0] = item_query['name_zh']
+                            it[1] = item_query['category']
                     logger.info('Move query result: '+ str(items))
                 elif index == 3:
                     # 針對物品欄把 request 拉出來寫在放入函式
@@ -95,21 +95,21 @@ def message_text(event):
                         for it in items:
                             item_query = sqlite.exec_one(con, 
                             f"SELECT name_zh, img_url FROM t_item WHERE name_en == '{it[0]}'")
-                            it[0] = item_query[0]
+                            it[0] = item_query['name_zh']
                     logger.info('Item query result: '+ str(items))
                 elif index == 4:
                     with sqlite.connect() as con:
                         for it in items:
                             item_query = sqlite.exec_one(con, 
                             f"SELECT name_zh, effect FROM t_ability WHERE name_en == '{it[0]}'")
-                            it[0] = item_query[0]
+                            it[0] = item_query['name_zh']
                     logger.info('Ability query result: '+ str(items))
                 elif index == 5: # 努力值, 長度==8
                     with sqlite.connect() as con:
                         for it in items:
                             item_query = sqlite.exec_one(con, 
                             f"SELECT name_zh FROM t_nature WHERE name_en == '{it[0]}'")
-                            it[0] = item_query[0]
+                            it[0] = item_query['name_zh']
                     logger.info('Nature query result: '+ str(items))
                 # 輸出成 Flex，若 API 有圖片可能需要另外處理
                 contents.append(skill_list(
