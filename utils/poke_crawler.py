@@ -29,19 +29,18 @@ def pokemon_wiki(pokemon, lang='zh'):
     soup = BeautifulSoup(r.text, "html.parser")
     pokemon_table = soup.select('table')[1]
     pokemon_rows = pokemon_table.select('tr')
-
     for pok in range(2, len(pokemon_rows)):
         if lang == 'en':
             zh_name = pokemon_rows[pok].select('td')[7].text
         else:
             zh_name = pokemon_rows[pok].select('td')[2].text
-
+        
         reg = f"{pokemon}.*"
         if len(re.findall(reg, zh_name)) > 0:
-            logger.debug('Found Pokemon...' + pokemon_rows)
+            logger.debug('Found Pokemon...' + str(pokemon_rows))
             return pokemon_rows[pok]
-        logger.debug('Maybe got WIKI problem, need to check wiki status.')
-        return None
+    logger.debug('Maybe got WIKI problem, need to check wiki status.')
+    return None
 
 def find_pokemon_image(pokemon_row_list):
     zh_name_url = pokemon_row_list.select('td')[2].findChild('a')['href']

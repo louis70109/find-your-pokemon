@@ -64,7 +64,7 @@ def message_text(event):
 
         if len(details) == 0:
             logger.info(message+' is not in this series.')
-            response = TextSendMessage('找不到 '+message)
+            response = TextSendMessage(f'賽季 {series} 沒有 {message}')
         else:
             contents = []
             # 或許可以把對應 API 都放在 mapping 裏面
@@ -74,10 +74,13 @@ def message_text(event):
                 item, items = '', []
                 logger.debug(f'搜尋 {pikalytic_mapping[index]}')
                 # 整理爬蟲下來各個清單對應的陣列
-                for entry_idx in range(0, len(s)-1):
+                for entry_idx in range(0, len(s)):
                     if index == 5 and entry_idx == 5:
                         break
+                        
                     item = arrange_text(s[entry_idx].text)
+                    if item[0] == 'Other':
+                        break
                     items.append(item)
 
                 if index == 1:
@@ -130,12 +133,14 @@ def message_text(event):
             eng_name, poke_img = find_pokemon_image(pokemon_row_list)
             logger.info(poke_img)
             with sqlite.connect() as con:
-                poke_query = sqlite.exec_one(con,
-                                             f"SELECT idx, name_zh FROM t_pokemon WHERE name_en == '{eng_name}'")
+                poke_query = sqlite.exec_one(
+                    con,
+                    f"SELECT idx, name_zh FROM t_pokemon WHERE name_en == '{eng_name}'")
                 logger.info(
                     "Specific Pokemon query from sqlite: "+str(poke_query))
-                poke_detail = sqlite.exec_one(con,
-                                              """
+                poke_detail = sqlite.exec_one(
+                    con,
+                    """
                 SELECT * FROM t_pokemon_detail_base_stat WHERE idx == '{}'
                 """.format(poke_query.get("idx")))
             logger.info('The Pokemon status is: '+str(poke_detail))
