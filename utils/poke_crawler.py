@@ -8,11 +8,12 @@ from utils import sqlite
 logger = logging.getLogger(__file__)
 
 def find_pokemon_name(pokemon_name):
+    # Find pokemon zh-hant name
     res = requests.get('https://tw.portal-pokemon.com/play/pokedex/api/v1?key_word='+pokemon_name)
-    logger.info('Find pokemon name is: '+pokemon_name)
+    logger.debug('Find pokemon name is: '+pokemon_name)
     result = res.json()['pokemons']
     if not result:
-        logger.info('Could not find TW name')
+        logger.info('Could not find TW name: ' + pokemon_name)
         return pokemon_name, None
         # with sqlite.connect() as con:
         #     item_query = sqlite.exec(con, 
@@ -37,18 +38,20 @@ def pokemon_wiki(pokemon, lang='zh'):
 
         reg = f"{pokemon}.*"
         if len(re.findall(reg, zh_name)) > 0:
-            print('Found Pokemon...')
+            logger.debug('Found Pokemon...' + pokemon_rows)
             return pokemon_rows[pok]
+        logger.debug('Maybe got WIKI problem, need to check wiki status.')
+        return None
 
 def find_pokemon_image(pokemon_row_list):
     zh_name_url = pokemon_row_list.select('td')[2].findChild('a')['href']
     eng_name = pokemon_row_list.select('td')[7].text.rstrip()
 
     poke_url = 'https://wiki.52poke.com'+zh_name_url
-    print('* Finding the pokemon image...')
+    logger.debug('* Finding the pokemon image...')
     poke_res = requests.get(url=poke_url)
     poke_soup = BeautifulSoup(poke_res.text, "html.parser")
 
-    print('------------------')
     poke_img = 'https:'+poke_soup.select('table.roundy.bgwhite')[0].find('img')['data-url']
+    logger.debug('Pokemon image url is: '+poke_img)
     return eng_name, poke_img

@@ -1,11 +1,18 @@
+import logging
 from utils.poke_crawler import find_pokemon_name
 
+logger = logging.getLogger(__file__)
 
 def specific_flex(
         image="https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
         name=['寶可夢','Pokemon'],
         body={'hp': 126, 'attack': 131, 'defense': 95, 'sp_attack': 131, 'sp_defense': 98, 'speed': 99, 'total': 680}):
-
+    logger.debug(f"""
+    Specific Pokemon flex generator...
+    Image: {image},
+    Name list: {name},
+    Body status: {body}
+    """)
     return {
         "type": "carousel",
         "contents": [
@@ -285,6 +292,7 @@ def skill_list(name="Pokemon", abilities: list = [[]], url: str = 'https://googl
     for ability in abilities:
         if name == '隊友':
             pokemon, pokemon_type = find_pokemon_name(ability[0])
+            logger.debug(f'ZH-hant name and type are: {pokemon}, {pokemon_type}')
             action = {
                 "type": "message",
                 "label": "action",
@@ -350,6 +358,8 @@ def skill_list(name="Pokemon", abilities: list = [[]], url: str = 'https://googl
                     "flex": 3
                 }]
             })
+        else:
+            logger.warning('* Skill list out off range, need to check crawler result.')
     return {
         "type": "bubble",
         "body": {

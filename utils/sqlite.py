@@ -7,6 +7,7 @@ logger = logging.getLogger(__file__)
 def connect():
     conn = sqlite3.connect("pokemon_wiki.db")
     conn.row_factory = sqlite3.Row
+    logger.info('Cursor init...')
     return conn
 
 
