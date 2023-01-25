@@ -7,6 +7,7 @@
   - [來源](https://github.com/smogon/pokemon-showdown-client/blob/master/WEB-API.md)
 - [招式對應清單](https://pokemon.fantasticmao.cn/pokemon/list)
   - [GitHub 清單](https://github.com/fantasticmao/pokemon-wiki/blob/master/apiDoc/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3.md)
+
 ## 開發環境
 
 - Mac 12.5 (M2)
@@ -20,6 +21,17 @@ mv .env.sample .env // fill the LINE_CHANNEL_ACCESS_TOKEN and LINE_CHANNEL_SECRE
 pip3 install -r requirements.txt
 python3 main.py
 ```
+
+### 環境變數
+
+
+- API_ENV=develop
+  - develop -> reload
+- LINE_CHANNEL_ACCESS_TOKEN=
+- LINE_CHANNEL_SECRET=
+  - LINE Bot Key
+- SERIES=gen9vgc2023series1
+  - 寶可夢賽季，從[這邊找賽季](https://www.pikalytics.com/pokedex)
 
 ## 建立暫時的 https
 
