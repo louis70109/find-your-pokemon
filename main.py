@@ -14,7 +14,7 @@ from fastapi.templating import Jinja2Templates
 from routers import webhooks
 
 app = FastAPI()
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=os.getenv('LOG', 'INFO'))
 templates = Jinja2Templates(directory="templates")
 
 app.include_router(webhooks.router)
@@ -37,5 +37,5 @@ async def root():
 if __name__ == "__main__":
     port = os.environ.get('PORT', default=8080)
     debug = True if os.environ.get('API_ENV', default='develop') == 'develop' else False
-    print('==========start===========')
+    logging.info('Application will start...')
     uvicorn.run("main:app", host="0.0.0.0", port=port, reload=debug)
