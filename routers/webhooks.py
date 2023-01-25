@@ -102,7 +102,7 @@ def message_text(event):
                         for it in items:
                             item_query = sqlite.exec_one(con, 
                             f"SELECT name_zh, effect FROM t_ability WHERE name_en == '{it[0]}'")
-                            it[0] = item_query['ability']
+                            it[0] = item_query['name_zh']
                     logger.info('Ability query result: '+ str(items))
                 elif index == 5: # 努力值, 長度==8
                     with sqlite.connect() as con:
