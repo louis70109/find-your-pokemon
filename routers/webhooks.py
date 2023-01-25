@@ -140,7 +140,7 @@ def message_text(event):
             # pokemon_dict = showdown.json()[eng_name.replace(' ', '').lower()]
             # logger.info(pokemon_dict)
             response_flex = specific_flex(
-                image=poke_img, name=Zh_name, body=poke_detail)
+                image=poke_img, name=[Zh_name, eng_name], body=poke_detail)
             response = FlexSendMessage(
                 alt_text=eng_name, contents=response_flex)
         else:

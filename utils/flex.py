@@ -1,10 +1,9 @@
-import urllib.parse
 from utils.poke_crawler import find_pokemon_name
 
 
 def specific_flex(
         image="https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
-        name="Pokemon",
+        name=['寶可夢','Pokemon'],
         body={'hp': 126, 'attack': 131, 'defense': 95, 'sp_attack': 131, 'sp_defense': 98, 'speed': 99, 'total': 680}):
 
     return {
@@ -28,7 +27,7 @@ def specific_flex(
                     "contents": [
                         {
                             "type": "text",
-                            "text": name,
+                            "text": name[0],
                             "color": "#ffffff",
                             "align": "start",
                             "size": "md",
@@ -258,7 +257,7 @@ def specific_flex(
                             "action": {
                                 "type": "message",
                                 "label": "細節",
-                                "text": f"find {name}"
+                                "text": f"find {name[1]}"
                             },
                             "style": "primary"
                         }
