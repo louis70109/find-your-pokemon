@@ -12,8 +12,6 @@
 
 <a href="https://lin.ee/hEm5lEq"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="加入好友" height="36" border="0"></a>
 
-<img src="https://qr-official.line.me/gs/M_059tnxqg_GW.png">
-
 ## 開發環境
 
 - Mac 12.5 (M2)
