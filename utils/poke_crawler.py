@@ -1,10 +1,26 @@
+import logging
 import requests
 import re
 from bs4 import BeautifulSoup
 
+from utils import sqlite
+
+logger = logging.getLogger(__file__)
+
 def find_pokemon_name(pokemon_name):
     res = requests.get('https://tw.portal-pokemon.com/play/pokedex/api/v1?key_word='+pokemon_name)
-    return res.json()['pokemons'][0]['pokemon_name']
+    logger.info('Find pokemon name is: '+pokemon_name)
+    result = res.json()['pokemons']
+    if not result:
+        logger.info('Could not find TW name')
+        return pokemon_name, None
+        # with sqlite.connect() as con:
+        #     item_query = sqlite.exec(con, 
+        #     f"SELECT name_zh FROM t_pokemon WHERE name_en == '{pokemon_name}'")
+        #     logger.info('Could not find TW name, query from Sqlite: '+ str(item_query))
+        #     return item_query[0]
+    else:
+        return result[0]['pokemon_name'], result[0]['pokemon_type_name']
 
 def pokemon_wiki(pokemon, lang='zh'):
     url = "https://wiki.52poke.com/zh-hant/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E5%88%97%E8%A1%A8%EF%BC%88%E5%9C%A8%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E4%B8%AD%EF%BC%89"
