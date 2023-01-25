@@ -5,7 +5,7 @@ from utils.poke_crawler import find_pokemon_name
 def specific_flex(
         image="https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
         name="Pokemon",
-        body={'hp': 60, 'atk': 45, 'def': 50, 'spa': 90, 'spd': 80, 'spe': 70}):
+        body={'hp': 126, 'attack': 131, 'defense': 95, 'sp_attack': 131, 'sp_defense': 98, 'speed': 99, 'total': 680}):
 
     return {
         "type": "carousel",
@@ -87,7 +87,7 @@ def specific_flex(
                         },
                         {
                             "type": "text",
-                            "text": f"攻擊: {body['atk']}",
+                            "text": f"攻擊: {body['attack']}",
                             "color": "#ffffff",
                             "align": "start",
                             "size": "xs",
@@ -106,7 +106,7 @@ def specific_flex(
                                             "type": "filler"
                                         }
                                     ],
-                                    "width": f"{body['atk']}%",
+                                    "width": f"{body['attack']}%",
                                     "backgroundColor": "#0D8186",
                                     "height": "6px"
                                 }
@@ -117,7 +117,7 @@ def specific_flex(
                         },
                         {
                             "type": "text",
-                            "text": f"防禦：{body['def']}",
+                            "text": f"防禦：{body['defense']}",
                             "color": "#ffffff",
                             "align": "start",
                             "size": "xs",
@@ -136,7 +136,7 @@ def specific_flex(
                                             "type": "filler"
                                         }
                                     ],
-                                    "width": f"{body['def']}%",
+                                    "width": f"{body['defense']}%",
                                     "backgroundColor": "#0D8186",
                                     "height": "6px"
                                 }
@@ -147,7 +147,7 @@ def specific_flex(
                         },
                         {
                             "type": "text",
-                            "text": f"特攻：{body['spa']}",
+                            "text": f"特攻：{body['sp_attack']}",
                             "color": "#ffffff",
                             "align": "start",
                             "size": "xs",
@@ -166,7 +166,7 @@ def specific_flex(
                                             "type": "filler"
                                         }
                                     ],
-                                    "width": f"{body['spa']}%",
+                                    "width": f"{body['sp_attack']}%",
                                     "backgroundColor": "#0D8186",
                                     "height": "6px"
                                 }
@@ -177,7 +177,7 @@ def specific_flex(
                         },
                         {
                             "type": "text",
-                            "text": f"特防：{body['spd']}",
+                            "text": f"特防：{body['sp_defense']}",
                             "color": "#ffffff",
                             "align": "start",
                             "size": "xs",
@@ -196,7 +196,7 @@ def specific_flex(
                                             "type": "filler"
                                         }
                                     ],
-                                    "width": f"{body['spd']}%",
+                                    "width": f"{body['sp_defense']}%",
                                     "backgroundColor": "#0D8186",
                                     "height": "6px"
                                 }
@@ -207,7 +207,7 @@ def specific_flex(
                         },
                         {
                             "type": "text",
-                            "text": f"速度：{body['spe']}",
+                            "text": f"速度：{body['speed']}",
                             "color": "#ffffff",
                             "align": "start",
                             "size": "xs",
@@ -226,7 +226,7 @@ def specific_flex(
                                             "type": "filler"
                                         }
                                     ],
-                                    "width": f"{body['spe']}%",
+                                    "width": f"{body['speed']}%",
                                     "backgroundColor": "#0D8186",
                                     "height": "6px"
                                 }
@@ -234,6 +234,14 @@ def specific_flex(
                             "backgroundColor": "#9FD8E36E",
                             "height": "6px",
                             "margin": "sm"
+                        },                        {
+                            "type": "text",
+                            "text": f"總和：{body['total']}",
+                            "color": "#ffffff",
+                            "align": "start",
+                            "size": "lg",
+                            "gravity": "center",
+                            "margin": "lg"
                         }
                     ],
                     "paddingTop": "27px",
@@ -291,7 +299,7 @@ def skill_list(name="Pokemon", abilities: list = [[]], url: str = 'https://googl
                 "label": "action",
                 "uri": url
             }
-        
+
         if len(ability) == 2:
             contents.append({
                 "type": "box",
