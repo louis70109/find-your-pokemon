@@ -1,3 +1,4 @@
+import logging
 import os
 
 if os.getenv('API_ENV') != 'production':
@@ -13,7 +14,7 @@ from fastapi.templating import Jinja2Templates
 from routers import webhooks
 
 app = FastAPI()
-
+logging.basicConfig(encoding='utf-8', level=logging.INFO)
 templates = Jinja2Templates(directory="templates")
 
 app.include_router(webhooks.router)
