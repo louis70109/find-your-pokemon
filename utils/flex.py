@@ -277,20 +277,20 @@ def skill_list(name="Pokemon", abilities: list[list] = [[]], url: str = 'https:/
     }]
     for ability in abilities:
         if name == '隊友':
-            pokemon = find_pokemon_name(ability[0])
+            pokemon, pokemon_type = find_pokemon_name(ability[0])
             action = {
                 "type": "message",
                 "label": "action",
                 "text": pokemon
             }
-            item = pokemon
+            ability[0] = pokemon
+            ability[1] = pokemon_type if pokemon_type is not None else ability[1]
         else:
             action = {
                 "type": "uri",
                 "label": "action",
                 "uri": url
             }
-            item = ability[0]
         
         if len(ability) == 2:
             contents.append({
@@ -299,7 +299,7 @@ def skill_list(name="Pokemon", abilities: list[list] = [[]], url: str = 'https:/
                 "spacing": "sm",
                 "contents": [{
                         "type": "text",
-                        "text": item,
+                        "text": ability[0],
                         "color": "#aaaaaa",
                         "size": "sm",
                         "flex": 5,
@@ -321,7 +321,7 @@ def skill_list(name="Pokemon", abilities: list[list] = [[]], url: str = 'https:/
                 "spacing": "sm",
                 "contents": [{
                         "type": "text",
-                        "text": item,
+                        "text": ability[0],
                         "color": "#aaaaaa",
                         "size": "sm",
                         "flex": 4,
