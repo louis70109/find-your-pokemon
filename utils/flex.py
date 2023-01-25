@@ -324,7 +324,7 @@ def skill_list(name="Pokemon", abilities: list = [[]], url: str = 'https://googl
                         "text": ability[0],
                         "color": "#aaaaaa",
                         "size": "sm",
-                        "flex": 4,
+                        "flex": 3,
                         "wrap": True,
                     "action": action
                 }, {
@@ -333,7 +333,7 @@ def skill_list(name="Pokemon", abilities: list = [[]], url: str = 'https://googl
                     "wrap": True,
                     "size": "sm",
                     "color": "#666666",
-                    "flex": 3
+                    "flex": 6
                 }, {
                     "type": "text",
                     "text": ability[2],
