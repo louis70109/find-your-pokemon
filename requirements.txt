@@ -12,3 +12,7 @@ mock
 requests
 gunicorn
 beautifulsoup4
+pysqlite3
+environs==9.5.0
+pytz==2022.2.1
+python-dateutil==2.8.2
