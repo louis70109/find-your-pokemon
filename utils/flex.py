@@ -266,7 +266,7 @@ def specific_flex(
     }
 
 
-def skill_list(name="Pokemon", abilities: list[list] = [[]], url: str = 'https://google.com'):
+def skill_list(name="Pokemon", abilities: list = [[]], url: str = 'https://google.com'):
     contents = [{
         "type": "text",
         "text": name,
