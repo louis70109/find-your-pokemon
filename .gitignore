@@ -20,3 +20,4 @@ var/
 .idea/*
 .DS_Store
 .tox/
+pokemon_wiki.db-journal
