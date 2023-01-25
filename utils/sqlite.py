@@ -5,7 +5,9 @@ logger = logging.getLogger(__file__)
 
 
 def connect():
-    return sqlite3.connect("pokemon_wiki.db")
+    conn = sqlite3.connect("pokemon_wiki.db")
+    conn.row_factory = sqlite3.Row
+    return conn
 
 
 def exec(conn, stmt, args=None, fetch=True, commit=True):
@@ -17,7 +19,7 @@ def exec(conn, stmt, args=None, fetch=True, commit=True):
             cursor.execute(stmt)
         if commit:
             conn.commit()
-        return cursor.fetchall() if fetch else None
+        return [dict(row) for row in cursor.fetchall()] if fetch else None
     except:
         logger.exception("Error executing stmt: %s. args: %s", stmt, args)
         if commit:
@@ -34,7 +36,7 @@ def exec_one(conn, stmt, args=None, fetch=True, commit=True):
             cursor.execute(stmt)
         if commit:
             conn.commit()
-        return cursor.fetchone() if fetch else None
+        return dict(cursor.fetchone()) if fetch else None
     except:
         logger.exception("Error executing stmt: %s. args: %s", stmt, args)
         if commit:
