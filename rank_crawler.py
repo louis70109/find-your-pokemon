@@ -37,22 +37,29 @@ skill_text = arrange_text(skill)
 print(skill_text)
 
 
-print('-------隊友-------')
-teammates = specific_soup.select('.pokedex-category-wrapper')[2]  # teammates
-teammate = teammates.select('.pokedex-move-entry-new')[0].text
-print(arrange_text(teammate))
+# print('-------隊友-------')
+# teammates = specific_soup.select('.pokedex-category-wrapper')[2]  # teammates
+# teammate = teammates.select('.pokedex-move-entry-new')[0].text
+# print(arrange_text(teammate))
 
-print('-------物品-------')
-items = specific_soup.select('.pokedex-category-wrapper')[3]
-item = items.select('.pokedex-move-entry-new')[0].text
-print(arrange_text(item))
+# print('-------物品-------')
+# items = specific_soup.select('.pokedex-category-wrapper')[3]
+# item = items.select('.pokedex-move-entry-new')[0].text
+# print(arrange_text(item))
 
-print('-------能力-------')
-abilities = specific_soup.select('.pokedex-category-wrapper')[4]
-ability = abilities.select('.pokedex-move-entry-new')[0].text
-print(arrange_text(ability))
+# print('-------能力-------')
+# abilities = specific_soup.select('.pokedex-category-wrapper')[4]
+# ability = abilities.select('.pokedex-move-entry-new')[0].text
+# print(arrange_text(ability))
 
-print('-------努力值-------')
-evs = specific_soup.select('.pokedex-category-wrapper')[5]
-ev = evs.select('.pokedex-move-entry-new')[0].text
-print(arrange_text(ev))
+# print('-------努力值-------')
+# evs = specific_soup.select('.pokedex-category-wrapper')[5]
+# ev = evs.select('.pokedex-move-entry-new')[0].text
+# print(arrange_text(ev))
+
+
+from utils import sqlite
+with sqlite.connect() as con:
+        query = sqlite.exec(con, 
+        f"SELECT name_zh FROM t_item WHERE name_en == 'Growth Mulch'")
+        print(query[0][0])
