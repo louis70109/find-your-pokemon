@@ -8,7 +8,7 @@ from utils import sqlite
 from fastapi import APIRouter, HTTPException, Header, Request
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import TextMessage, MessageEvent, FlexSendMessage, TextSendMessage
+from linebot.models import TextMessage, MessageEvent, FlexSendMessage, TextSendMessage, ImageSendMessage
 from pydantic import BaseModel
 
 from utils.flex import skill_list, specific_flex
@@ -50,7 +50,10 @@ def arrange_text(text: str):
 def message_text(event):
     message = event.message.text
     logger.debug('LINE Bot reply message is: '+message)
-    if re.findall("^find\s+.*", message):
+    if message == '屬性':
+        image_url = 'https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/pokemon.jpg'
+        response = ImageSendMessage(image_url, image_url)
+    elif re.findall("^find\s+.*", message):
         message = message.split(' ')[1].lower()
 
         series = os.getenv('SERIES')
@@ -77,7 +80,7 @@ def message_text(event):
                 for entry_idx in range(0, len(s)):
                     if index == 5 and entry_idx == 5:
                         break
-                        
+
                     item = arrange_text(s[entry_idx].text)
                     if item[0] == 'Other':
                         break
