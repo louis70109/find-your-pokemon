@@ -114,7 +114,7 @@ def search_specific_pokemon_by_wiki(pokemon_name='快龍'):
         # logger.info(pokemon_dict)
         response_flex = specific_flex(
             image=poke_img, name=[Zh_name, eng_name], body=poke_detail)
-        response = FlexSendMessage(
+        return FlexSendMessage(
             alt_text=eng_name, contents=response_flex)
     else:
         logger.info('關鍵字找不到' + pokemon_name)
