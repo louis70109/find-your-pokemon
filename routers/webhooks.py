@@ -1,19 +1,13 @@
 import logging
 import os
 from typing import List, Optional
-import requests
 import re
-from bs4 import BeautifulSoup
 from controller.find_pokemon import find_specific_pokemon_all_status, search_specific_pokemon_by_wiki
-from utils import sqlite
 from fastapi import APIRouter, HTTPException, Header, Request
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import TextMessage, MessageEvent, FlexSendMessage, TextSendMessage, ImageSendMessage
+from linebot.models import TextMessage, MessageEvent, ImageSendMessage
 from pydantic import BaseModel
-
-from utils.flex import skill_list, specific_flex
-from utils.poke_crawler import find_pokemon_image, pokemon_wiki, find_pokemon_name
 
 line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
 handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
