@@ -61,7 +61,7 @@ def message_text(event):
             en_name = all_rank[i].text.rstrip()
             zh_name, _ = find_pokemon_name(en_name)
             trend_percent = all_trending[i].text.rstrip()
-            trending += f'{zh_name} {trend_percent}'
+            trending += f'{zh_name} {trend_percent}\n'
         response = TextSendMessage(trending)
     elif message == 'Heal':
         res = requests.get(os.getenv('HEAL_URL'))
