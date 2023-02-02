@@ -66,7 +66,7 @@ def message_text(event):
     elif message == 'Heal':
         res = requests.get(os.getenv('HEAL_URL'))
         response = TextSendMessage(str(res.json()))
-    elif re.findall("^find\s+.*", message):
+    elif re.findall("^find\s+.*\s*.*", message):
         message = message.split(' ')[1].lower()
         response = find_specific_pokemon_all_status(pokemon_name=message)
     else:
