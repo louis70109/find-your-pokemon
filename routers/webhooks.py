@@ -68,7 +68,7 @@ def message_text(event):
         response = TextSendMessage(str(res.json()))
     elif re.findall("^find\s+.*\s*.*", message):
         msg_split = message.split(' ')
-        message = msg_split[1].lower() if len(msg_split) == 1 else f'{msg_split[1]} {msg_split[1]}'.lower()
+        message = msg_split[1].lower() if len(msg_split) == 1 else f'{msg_split[1]} {msg_split[2]}'.lower()
         response = find_specific_pokemon_all_status(pokemon_name=message)
     else:
         response = search_specific_pokemon_by_wiki(pokemon_name=message)
