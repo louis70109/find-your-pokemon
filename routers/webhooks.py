@@ -7,7 +7,7 @@ from controller.find_pokemon import find_specific_pokemon_all_status, search_spe
 from fastapi import APIRouter, HTTPException, Header, Request
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import TextMessage, MessageEvent, ImageSendMessage, TextSendMessage
+from linebot.models import TextMessage, MessageEvent, ImageSendMessage, TextSendMessage, FlexSendMessage
 from pydantic import BaseModel
 from bs4 import BeautifulSoup
 
@@ -69,7 +69,11 @@ def message_text(event):
     elif re.findall("^find\s+.*\s*.*", message):
         msg_split = message.split(' ')
         message = msg_split[1].lower() if len(msg_split) == 1 else f'{msg_split[1]} {msg_split[2]}'.lower()
-        response = find_specific_pokemon_all_status(pokemon_name=message)
+        contents: list = find_specific_pokemon_all_status(pokemon_name=message)
+        response = FlexSendMessage(alt_text=message, contents={
+                "type": "carousel",
+                "contents": contents
+            })
     else:
         response = search_specific_pokemon_by_wiki(pokemon_name=message)
     line_bot_api.reply_message(
