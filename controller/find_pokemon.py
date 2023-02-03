@@ -1,5 +1,5 @@
 import logging
-import os
+import os, re
 import requests
 from bs4 import BeautifulSoup
 from utils import sqlite
@@ -12,9 +12,15 @@ from utils.poke_crawler import arrange_text, find_pokemon_image, pokemon_wiki, f
 logger = logging.getLogger(__file__)
 
 
-def find_specific_pokemon_all_status(pokemon_name="魔幻假面喵"):
+def find_specific_pokemon_all_status(pokemon_name="Roaring Moon"):
+
+    series_search_name = pokemon_name
+    # Force to change name to %20 (e.g. Roaring Moon)
+    if re.findall("\w+\s+\w+", pokemon_name):
+        poke_split = series_search_name.split(' ')
+        series_search_name = f'{poke_split[0]}%20{poke_split[1]}'.lower()
     series = os.getenv('SERIES')
-    url = "https://www.pikalytics.com/pokedex/"+series+'/'+pokemon_name
+    url = "https://www.pikalytics.com/pokedex/"+series+'/'+series_search_name
     logger.debug('Pokemon series web crawler query: ' + url)
 
     rs = requests.get(url=url)
@@ -103,8 +109,8 @@ def search_specific_pokemon_by_wiki(pokemon_name='快龍'):
             poke_detail = sqlite.exec_one(
                 con,
                 """
-          SELECT * FROM t_pokemon_detail_base_stat WHERE idx == '{}'
-          """.format(poke_query.get("idx")))
+                SELECT * FROM t_pokemon_detail_base_stat WHERE idx == '{}'
+                """.format(poke_query.get("idx")))
         logger.info('The Pokemon status is: '+str(poke_detail))
 
         Zh_name, _ = find_pokemon_name(eng_name)
