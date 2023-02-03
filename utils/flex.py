@@ -301,6 +301,9 @@ def skill_list(name="Pokemon", abilities: list = [[]], url: str = 'https://googl
             ability[0] = pokemon
             ability[1] = pokemon_type if pokemon_type is not None else ability[1]
         else:
+            if name != '努力值':
+                from urllib import parse
+                url = f'https://wiki.52poke.com/wiki/{parse.quote(ability[0].encode("utf-8"))}'
             action = {
                 "type": "uri",
                 "label": "action",
