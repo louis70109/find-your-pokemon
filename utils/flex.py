@@ -280,6 +280,61 @@ def specific_flex(
     }
 
 
+def top_list(name="Pokemon", abilities: list = [[]]):
+    contents = [{
+        "type": "text",
+        "text": name,
+        "wrap": True,
+        "weight": "bold",
+        "gravity": "center",
+        "size": "xl"
+    }]
+    for ability in abilities:
+        pokemon, _ = find_pokemon_name(ability[0])
+        logger.debug(f'ZH-hant name and type are: {pokemon}, {ability[1]}')
+        action = {
+            "type": "message",
+            "label": "action",
+            "text": pokemon
+        }
+        ability[0] = pokemon
+
+        if len(ability) == 2:
+            contents.append({
+                "type": "box",
+                "layout": "baseline",
+                "spacing": "sm",
+                "contents": [{
+                        "type": "text",
+                        "text": ability[0],
+                        "color": "#aaaaaa",
+                        "size": "sm",
+                        "flex": 5,
+                    "action": action
+                }, {
+                    "type": "text",
+                    "text": ability[1],
+                    "wrap": True,
+                    "size": "sm",
+                    "color": "#666666",
+                    "flex": 5
+                }
+                ]
+            })
+        else:
+            logger.warning('* Skill list out off range, need to check crawler result.')
+    return {
+        "type": "bubble",
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "md",
+            "contents": contents
+        }
+    }
+
+
+
 def skill_list(name="Pokemon", abilities: list = [[]], url: str = 'https://google.com'):
     contents = [{
         "type": "text",

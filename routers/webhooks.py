@@ -10,6 +10,7 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import TextMessage, MessageEvent, ImageSendMessage, TextSendMessage, FlexSendMessage
 from pydantic import BaseModel
 from bs4 import BeautifulSoup
+from utils.flex import top_list
 
 from utils.poke_crawler import find_pokemon_name
 
@@ -41,7 +42,6 @@ async def callback(request: Request, x_line_signature: str = Header(None)):
     return 'OK'
 
 
-
 @handler.add(MessageEvent, message=TextMessage)
 def message_text(event):
     message = event.message.text
@@ -56,24 +56,27 @@ def message_text(event):
         all_rank = soup.select('span.pokemon-name')
         all_trending = soup.select('.float-right.margin-right-20')
 
-        trending = ''
+        trending = []
         for i in range(len(all_rank)):
             en_name = all_rank[i].text.rstrip()
-            zh_name, _ = find_pokemon_name(en_name)
             trend_percent = all_trending[i].text.rstrip()
-            trending += f'{zh_name} {trend_percent}\n'
-        response = TextSendMessage(trending)
+            trending.append([en_name, trend_percent])
+
+        response = FlexSendMessage(
+            alt_text='賽季排行榜', contents=top_list('排行榜', trending))
     elif message == 'Heal':
+        # Healthy check by reply message
         res = requests.get(os.getenv('HEAL_URL'))
         response = TextSendMessage(str(res.json()))
     elif re.findall("^find\s*.*\s*.*", message):
         msg_split = message.split(' ')
-        message = msg_split[1].lower() if len(msg_split) == 1 else f'{msg_split[1]} {msg_split[2]}'.lower()
+        message = msg_split[1].lower() if len(
+            msg_split) == 1 else f'{msg_split[1]} {msg_split[2]}'.lower()
         contents: list = find_specific_pokemon_all_status(pokemon_name=message)
         response = FlexSendMessage(alt_text=message, contents={
-                "type": "carousel",
-                "contents": contents
-            })
+            "type": "carousel",
+            "contents": contents
+        })
     else:
         response = search_specific_pokemon_by_wiki(pokemon_name=message)
     line_bot_api.reply_message(
