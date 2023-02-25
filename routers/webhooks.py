@@ -49,6 +49,8 @@ def message_text(event):
     if message == '屬性':
         image_url = 'https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/pokemon.jpg'
         response = ImageSendMessage(image_url, image_url)
+    elif message == '組隊資訊':
+        response = TextSendMessage('https://docs.google.com/spreadsheets/d/1axlwmzPA49rYkqXh7zHvAtSP-TKbM0ijGYBPRflLSWw/edit#gid=313573250')
     elif message == 'TOP':
         url = "https://www.pikalytics.com/pokedex/"
         r = requests.get(url=url)
