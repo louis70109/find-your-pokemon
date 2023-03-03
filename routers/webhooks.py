@@ -43,46 +43,63 @@ async def callback(request: Request, x_line_signature: str = Header(None)):
 
 
 @handler.add(MessageEvent, message=TextMessage)
-def message_text(event):
-    message = event.message.text
-    logger.debug('LINE Bot reply message is: '+message)
+def message_text(event: MessageEvent) -> None:
+    message: str = event.message.text
+    logger.debug(f'LINE Bot reply message is: {message}')
+
     if message == '屬性':
-        image_url = 'https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/pokemon.jpg'
-        response = ImageSendMessage(image_url, image_url)
+        image_url: str = 'https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/pokemon.jpg'
+        response: ImageSendMessage = ImageSendMessage(image_url, image_url)
+
     elif message == 'VGC':
-        response = TextSendMessage(
-            'https://docs.google.com/spreadsheets/d/1axlwmzPA49rYkqXh7zHvAtSP-TKbM0ijGYBPRflLSWw/edit#gid=313573250')
+        url: str = 'https://docs.google.com/spreadsheets/d/1axlwmzPA49rYkqXh7zHvAtSP-TKbM0ijGYBPRflLSWw/edit#gid=313573250'
+        response: TextSendMessage = TextSendMessage(url)
+
     elif message == 'TOP':
-        url = "https://www.pikalytics.com/pokedex/"
-        r = requests.get(url=url)
-        soup = BeautifulSoup(r.text, "html.parser")
-        all_rank = soup.select('span.pokemon-name')
-        all_trending = soup.select('.float-right.margin-right-20')
+        url: str = 'https://www.pikalytics.com/pokedex/'
+        response: FlexSendMessage = get_pokemon_trending(url)
 
-        trending = []
-        for i in range(len(all_rank)):
-            en_name = all_rank[i].text.rstrip()
-            trend_percent = all_trending[i].text.rstrip()
-            trending.append([en_name, trend_percent])
-
-        response = FlexSendMessage(
-            alt_text='賽季排行榜', contents=top_list('排行榜', trending))
     elif message == 'Heal':
-        # Healthy check by reply message
-        res = requests.get(os.getenv('HEAL_URL'))
-        response = TextSendMessage(str(res.json()))
-    elif re.findall("^find\s*.*\s*.*", message):
-        msg_split = message.split(' ')
-        message = msg_split[1].lower() if len(
-            msg_split) == 2 else f'{msg_split[1]} {msg_split[2]}'.lower()
-        contents: list = find_specific_pokemon_all_status(pokemon_name=message)
-        response = FlexSendMessage(alt_text=message, contents={
-            "type": "carousel",
-            "contents": contents
-        })
+        response: TextSendMessage = check_health()
+
+    elif re.findall('^find\s*.*\s*.*', message):
+        response: FlexSendMessage = get_pokemon_status(message)
+
     else:
-        response = search_specific_pokemon_by_wiki(pokemon_name=message)
-    line_bot_api.reply_message(
-        event.reply_token,
-        response
-    )
+        response: TextSendMessage = search_pokemon_wiki(message)
+
+    line_bot_api.reply_message(event.reply_token, response)
+
+
+def get_pokemon_trending(url: str) -> FlexSendMessage:
+    r: requests.Response = requests.get(url=url)
+    soup: BeautifulSoup = BeautifulSoup(r.text, 'html.parser')
+    all_rank: List[BeautifulSoup] = soup.select('span.pokemon-name')
+    all_trending: List[BeautifulSoup] = soup.select('.float-right.margin-right-20')
+
+    trending: List[List[str]] = []
+    for i in range(len(all_rank)):
+        en_name: str = all_rank[i].text.rstrip()
+        trend_percent: str = all_trending[i].text.rstrip()
+        trending.append([en_name, trend_percent])
+
+    return FlexSendMessage(alt_text='賽季排行榜', contents=top_list('排行榜', trending))
+
+
+def check_health() -> TextSendMessage:
+    # Healthy check by reply message
+    res: requests.Response = requests.get(os.getenv('HEAL_URL'))
+    return TextSendMessage(str(res.json()))
+
+
+def get_pokemon_status(message: str) -> FlexSendMessage:
+    msg_split: List[str] = message.split(' ')
+    name: str = msg_split[1].lower()
+    if len(msg_split) == 3:
+        name: str = f'{msg_split[1]} {msg_split[2]}'.lower()
+    contents: list = find_specific_pokemon_all_status(pokemon_name=name)
+    return FlexSendMessage(alt_text=name, contents={"type": "carousel", "contents": contents})
+
+
+def search_pokemon_wiki(pokemon_name: str) -> TextSendMessage:
+    return search_specific_pokemon_by_wiki(pokemon_name)

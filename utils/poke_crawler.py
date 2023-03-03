@@ -26,23 +26,26 @@ def find_pokemon_name(pokemon_name):
         return result[0]['pokemon_name'], result[0]['pokemon_type_name']
 
 
-def pokemon_wiki(pokemon, lang='zh'):
-    url = "https://wiki.52poke.com/zh-hant/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E5%88%97%E8%A1%A8%EF%BC%88%E5%9C%A8%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E4%B8%AD%EF%BC%89"
-    r = requests.get(url=url)
-    soup = BeautifulSoup(r.text, "html.parser")
+def pokemon_wiki(pokemon_name, language='zh'):
+    url = "https://wiki.52poke.com/{}/{}".format(
+        'zh-hant' if language == 'zh' else 'en',
+        '%E5%AE%9D%E5%8F%AF%E6%A2%A6%E5%88%97%E8%A1%A8%EF%BC%88%E5%9C%A8%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E4%B8%AD%EF%BC%89')
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
     pokemon_table = soup.select('table')[1]
-    pokemon_rows = pokemon_table.select('tr')
-    for pok in range(2, len(pokemon_rows)):
-        if lang == 'en':
-            zh_name = pokemon_rows[pok].select('td')[7].text
+    pokemon_rows = pokemon_table.select('tr')[2:]
+    
+    for row in pokemon_rows:
+        if language == 'en':
+            name = row.select('td')[7].text
         else:
-            zh_name = pokemon_rows[pok].select('td')[2].text
-
-        reg = f"{pokemon}.*"
-        if len(re.findall(reg, zh_name)) > 0:
-            logger.debug('Found Pokemon...' + str(pokemon_rows))
-            return pokemon_rows[pok]
-    logger.debug('Maybe got WIKI problem, need to check wiki status.')
+            name = row.select('td')[2].text
+        
+        if pokemon_name in name:
+            logger.debug(f"Found Pokemon '{pokemon_name}' in row: {row}")
+            return row
+    
+    logger.debug("Pokemon '{}' not found in wiki".format(pokemon_name))
     return None
 
 
