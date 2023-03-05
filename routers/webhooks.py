@@ -7,10 +7,11 @@ from controller.find_pokemon import find_specific_pokemon_all_status, search_spe
 from fastapi import APIRouter, HTTPException, Header, Request
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import TextMessage, MessageEvent, ImageSendMessage, TextSendMessage, FlexSendMessage
+from linebot.models import TextMessage, MessageEvent, ImageSendMessage, TextSendMessage, FlexSendMessage, ImagemapSendMessage, URIImagemapAction, ImagemapArea, BaseSize
 from pydantic import BaseModel
 from bs4 import BeautifulSoup
 from utils.flex import top_list
+from utils.openai import generate_random_image
 
 from utils.poke_crawler import find_pokemon_name
 
@@ -75,7 +76,8 @@ def get_pokemon_trending(url: str) -> FlexSendMessage:
     r: requests.Response = requests.get(url=url)
     soup: BeautifulSoup = BeautifulSoup(r.text, 'html.parser')
     all_rank: List[BeautifulSoup] = soup.select('span.pokemon-name')
-    all_trending: List[BeautifulSoup] = soup.select('.float-right.margin-right-20')
+    all_trending: List[BeautifulSoup] = soup.select(
+        '.float-right.margin-right-20')
 
     trending: List[List[str]] = []
     for i in range(len(all_rank)):
@@ -102,4 +104,9 @@ def get_pokemon_status(message: str) -> FlexSendMessage:
 
 
 def search_pokemon_wiki(pokemon_name: str) -> TextSendMessage:
-    return search_specific_pokemon_by_wiki(pokemon_name)
+    pokemon = search_specific_pokemon_by_wiki(pokemon_name)
+    if pokemon is None:
+        image_url = generate_random_image(pokemon=pokemon_name)
+        pokemon = ImageSendMessage(image_url, image_url)
+
+    return pokemon

@@ -87,4 +87,4 @@ def search_specific_pokemon_by_wiki(pokemon_name: str = '快龍') -> Union[FlexS
         return FlexSendMessage(alt_text=eng_name, contents=response_flex)
     else:
         logger.info(f"關鍵字找不到 {pokemon_name}")
-        return TextSendMessage(f"找不到 {pokemon_name}")
+        return None
