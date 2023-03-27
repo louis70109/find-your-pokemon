@@ -8,7 +8,7 @@ def generate_random_image(pokemon):
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
     response = openai.Image.create(
-        prompt=f"a pancil drawing pokemon of {pokemon} wait for challenge",
+        prompt=f"a pokemon photo of {pokemon} wait for challenge, pixel art",
         n=1,
         size="1024x1024"
     )
