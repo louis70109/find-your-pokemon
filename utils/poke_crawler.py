@@ -1,9 +1,8 @@
 import logging
 import requests
-import re
+from typing import Tuple
 from bs4 import BeautifulSoup
 
-from utils import sqlite
 
 logger = logging.getLogger(__file__)
 
@@ -34,33 +33,32 @@ def pokemon_wiki(pokemon_name, language='zh'):
     soup = BeautifulSoup(response.text, 'html.parser')
     pokemon_table = soup.select('table')[1]
     pokemon_rows = pokemon_table.select('tr')[2:]
-    
+
     for row in pokemon_rows:
         if language == 'en':
             name = row.select('td')[7].text
         else:
             name = row.select('td')[2].text
-        
+
         if pokemon_name in name:
             logger.debug(f"Found Pokemon '{pokemon_name}' in row: {row}")
             return row
-    
+
     logger.debug("Pokemon '{}' not found in wiki".format(pokemon_name))
     return None
 
 
-def find_pokemon_image(pokemon_row_list):
+def find_pokemon_image(pokemon_row_list: BeautifulSoup) -> Tuple[str, str]:
     zh_name_url = pokemon_row_list.select('td')[2].findChild('a')['href']
     eng_name = pokemon_row_list.select('td')[7].text.rstrip()
 
-    poke_url = 'https://wiki.52poke.com'+zh_name_url
-    logger.debug('* Finding the pokemon image...')
+    poke_url = f'https://wiki.52poke.com{zh_name_url}'
+    logger.debug(f'Finding the pokemon image from {poke_url}...')
     poke_res = requests.get(url=poke_url)
-    poke_soup = BeautifulSoup(poke_res.text, "html.parser")
+    poke_soup = BeautifulSoup(poke_res.text, 'html.parser')
 
-    poke_img = 'https:' + \
-        poke_soup.select('table.roundy.bgwhite')[0].find('img')['data-url']
-    logger.debug('Pokemon image url is: '+poke_img)
+    poke_img = f'https:{poke_soup.select("table.roundy.bgwhite")[0].find("img")["data-url"]}'
+    logger.debug(f'Pokemon image url is: {poke_img}')
     return eng_name, poke_img
 
 

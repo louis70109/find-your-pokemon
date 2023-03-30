@@ -33,6 +33,10 @@ async def root():
         'pokelytic': 'up' if res_lytic.status_code == 200 else 'down'
     }
 
+@app.get("/healthz")
+async def healthz():
+    return {"message": "Hello World!"}
+
 
 if __name__ == "__main__":
     port = os.environ.get('PORT', default=8080)

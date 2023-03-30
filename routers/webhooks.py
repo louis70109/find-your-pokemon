@@ -7,13 +7,12 @@ from controller.find_pokemon import find_specific_pokemon_all_status, search_spe
 from fastapi import APIRouter, HTTPException, Header, Request
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import TextMessage, MessageEvent, ImageSendMessage, TextSendMessage, FlexSendMessage, ImagemapSendMessage, URIImagemapAction, ImagemapArea, BaseSize
+from linebot.models import TextMessage, MessageEvent, ImageSendMessage, TextSendMessage, FlexSendMessage
 from pydantic import BaseModel
 from bs4 import BeautifulSoup
 from utils.flex import top_list
 from utils.openai import generate_random_image
 
-from utils.poke_crawler import find_pokemon_name
 
 line_bot_api = LineBotApi(os.getenv('LINE_CHANNEL_ACCESS_TOKEN'))
 handler = WebhookHandler(os.getenv('LINE_CHANNEL_SECRET'))
@@ -64,11 +63,11 @@ def message_text(event: MessageEvent) -> None:
         response: TextSendMessage = check_health()
 
     elif re.findall('^find\s*.*\s*.*', message):
-        response: FlexSendMessage = get_pokemon_status(message)
-
+        response: FlexSendMessage = get_pokemon_status(message)        
     else:
         response: TextSendMessage = search_pokemon_wiki(message)
-
+    
+    logger.debug(f'LINE bot response JSON: {str(response)}')
     line_bot_api.reply_message(event.reply_token, response)
 
 
