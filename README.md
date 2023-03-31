@@ -14,6 +14,10 @@
 
 <a href="https://lin.ee/hEm5lEq"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="加入好友" height="36" border="0"></a>
 
+## 操作流程
+
+[操作流程](https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/bot-flow.png)
+
 ## 開發環境
 
 在開始使用專案之前，需要確認您已經安裝了以下工具和套件:
