@@ -50,7 +50,7 @@ def find_specific_pokemon_all_status(pokemon_name: str = "Roaring Moon") -> List
 
             pika: Pikalytics = Pikalytics(index=index, url=url)
             pika.poke_mapping(items)
-            
+
             logger.debug('Pokemon all body status: ' + str(pika.template))
 
             # 輸出成 Flex，若 API 有圖片可能需要另外處理

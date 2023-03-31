@@ -56,8 +56,8 @@ def find_pokemon_image(pokemon_row_list: BeautifulSoup) -> Tuple[str, str]:
     logger.debug(f'Finding the pokemon image from {poke_url}...')
     poke_res = requests.get(url=poke_url)
     poke_soup = BeautifulSoup(poke_res.text, 'html.parser')
-
-    poke_img = f'https:{poke_soup.select("table.roundy.bgwhite")[0].find("img")["data-url"]}'
+    
+    poke_img = f'https://play.pokemonshowdown.com/sprites/gen5/{eng_name.lower()}.png'
     logger.debug(f'Pokemon image url is: {poke_img}')
     return eng_name, poke_img
 

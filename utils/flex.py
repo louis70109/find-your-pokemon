@@ -23,7 +23,7 @@ def specific_flex(
                 "hero": {
                     "type": "image",
                     "url": image,
-                    "size": "full",
+                    "size": "xl",
                     "margin": "none",
                     "aspectMode": "cover",
                     "aspectRatio": "16:16"
