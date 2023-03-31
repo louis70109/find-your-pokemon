@@ -4,11 +4,11 @@ import logging
 
 logger = logging.getLogger(__file__)
 
-def generate_random_image(pokemon):
+def generate_random_image(pokemon: str) -> str:
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
     response = openai.Image.create(
-        prompt=f"a pokemon photo of {pokemon} wait for challenge, pixel art",
+        prompt=f"3D render of a cute pokemon of {pokemon} in an aquarium on a dark blue background, digital art",
         n=1,
         size="1024x1024"
     )
