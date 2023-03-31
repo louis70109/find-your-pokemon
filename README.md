@@ -51,7 +51,7 @@ ngrok http 8080
 2. 開另一個終端機
 
 ```shell
-sh change_bot_url.sh BOT_TOKEN https://NGROK_URL/webhooks/line
+sh change_bot_url.sh LINE_BOT_TOKEN https://NGROK_URL/webhooks/line
 ```
 
 ## 健康檢查
@@ -80,7 +80,8 @@ gcloud run deploy nijia-cloud-run-example-1 --source .
 
 在專案頁面右上角點擊「Fork」，即可將本專案複製到您的帳戶下。
 
-###Clone 專案
+### Clone 專案
+
 在您的 GitHub 下的專案中，點擊「Clone or download」並複製該專案的 URL。然後在終端機中執行以下命令：
 
 ```
