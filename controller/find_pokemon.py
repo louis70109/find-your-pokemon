@@ -63,6 +63,8 @@ def find_specific_pokemon_all_status(pokemon_name: str = "Roaring Moon") -> List
 
 
 def search_specific_pokemon_by_wiki(pokemon_name: str = '快龍') -> Union[FlexSendMessage, TextSendMessage]:
+    # If found, return SQL data.
+    # If not, return None.
     pokemon_row_list: List[Dict[str, str]] = pokemon_wiki(pokemon_name)
 
     if pokemon_row_list and len(pokemon_row_list) > 0:

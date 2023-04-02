@@ -51,15 +51,15 @@ def message_text(event: MessageEvent) -> None:
         image_url: str = 'https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/pokemon.jpg'
         response: ImageSendMessage = ImageSendMessage(image_url, image_url)
 
-    elif message == 'VGC':
+    elif message.lower() == 'vgc':
         url: str = 'https://docs.google.com/spreadsheets/d/1axlwmzPA49rYkqXh7zHvAtSP-TKbM0ijGYBPRflLSWw/edit#gid=313573250'
         response: TextSendMessage = TextSendMessage(url)
 
-    elif message == 'TOP':
+    elif message.lower() == 'top':
         url: str = 'https://www.pikalytics.com/pokedex/'
         response: FlexSendMessage = get_pokemon_trending(url)
 
-    elif message == 'Heal':
+    elif message.lower() == 'heal':
         response: TextSendMessage = check_health()
 
     elif re.findall('^find\s*.*\s*.*', message):
