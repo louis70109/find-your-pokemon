@@ -68,23 +68,26 @@ def search_specific_pokemon_by_wiki(pokemon_name: str = '快龍') -> Union[FlexS
     if pokemon_row_list and len(pokemon_row_list) > 0:
         eng_name, poke_img = find_pokemon_image(pokemon_row_list)
         logger.debug(f'Pokemon image url" {poke_img}')
+        try:
+            with sqlite.connect() as con:
+                poke_query: Dict[str, str] = sqlite.exec_one(
+                    con,
+                    f"SELECT idx, name_zh FROM t_pokemon WHERE name_en = '{eng_name}'")
+                logger.info(
+                    f"Specific Pokemon query from sqlite: {poke_query}")
+                poke_detail: Dict[str, Union[int, str]] = sqlite.exec_one(
+                    con,
+                    f"SELECT * FROM t_pokemon_detail_base_stat WHERE idx = '{poke_query.get('idx')}'"
+                )
+                logger.info(f"The Pokemon status is: {poke_detail}")
 
-        with sqlite.connect() as con:
-            poke_query: Dict[str, str] = sqlite.exec_one(
-                con,
-                f"SELECT idx, name_zh FROM t_pokemon WHERE name_en = '{eng_name}'")
-            logger.info(
-                f"Specific Pokemon query from sqlite: {poke_query}")
-            poke_detail: Dict[str, Union[int, str]] = sqlite.exec_one(
-                con,
-                f"SELECT * FROM t_pokemon_detail_base_stat WHERE idx = '{poke_query.get('idx')}'"
-            )
-            logger.info(f"The Pokemon status is: {poke_detail}")
-
-        zh_name, _ = find_pokemon_name(eng_name)
-        response_flex: Dict[str, Any] = specific_flex(
-            image=poke_img, name=[zh_name, eng_name], body=poke_detail)
-        return FlexSendMessage(alt_text=eng_name, contents=response_flex)
+            zh_name, _ = find_pokemon_name(eng_name)
+            response_flex: Dict[str, Any] = specific_flex(
+                image=poke_img, name=[zh_name, eng_name], body=poke_detail)
+            return FlexSendMessage(alt_text=eng_name, contents=response_flex)
+        except:
+            logger.info(f'{pokemon_name} not in SQL')
+            return None
     else:
-        logger.info(f"關鍵字找不到 {pokemon_name}")
+        logger.info(f"Keyword {pokemon_name} not found.")
         return None

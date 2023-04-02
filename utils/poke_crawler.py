@@ -41,7 +41,7 @@ def pokemon_wiki(pokemon_name, language='zh'):
             name = row.select('td')[2].text
 
         if pokemon_name in name:
-            logger.debug(f"Found Pokemon '{pokemon_name}' in row: {row}")
+            logger.debug(f"Found Pokemon '{pokemon_name}'")
             return row
 
     logger.debug("Pokemon '{}' not found in wiki".format(pokemon_name))
