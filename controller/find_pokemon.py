@@ -20,7 +20,7 @@ def find_specific_pokemon_all_status(pokemon_name: str = "Roaring Moon") -> List
         poke_split: List[str] = series_search_name.split(' ')
         series_search_name = f'{poke_split[0]}%20{poke_split[1]}'.lower()
     series: str = os.getenv('SERIES')
-    url: str = "https://www.pikalytics.com/pokedex/"+series+'/'+series_search_name
+    url: str = f"https://www.pikalytics.com/pokedex/{series}/{series_search_name}"
     logger.debug('Pokemon series web crawler query: ' + url)
 
     rs: requests.Response = requests.get(url=url)
@@ -58,7 +58,7 @@ def find_specific_pokemon_all_status(pokemon_name: str = "Roaring Moon") -> List
                 name=pika.template['name'],
                 abilities=pika.template['abilities'],
                 url=url))
-        logger.info('Ready to generate FlexMessage...')
+        logger.debug('Ready to generate FlexMessage...')
         return contents
 
 
