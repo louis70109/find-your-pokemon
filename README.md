@@ -9,7 +9,7 @@
   - [來源](https://github.com/smogon/pokemon-showdown-client/blob/master/WEB-API.md)
 - [招式對應清單](https://pokemon.fantasticmao.cn/pokemon/list)
   - [GitHub 清單](https://github.com/fantasticmao/pokemon-wiki/blob/master/apiDoc/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3.md)
-
+- [寶可夢傳統風格照片庫](https://play.pokemonshowdown.com/sprites/gen5/)
 ## 加入好友
 
 <a href="https://lin.ee/hEm5lEq"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="加入好友" height="36" border="0"></a>
