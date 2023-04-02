@@ -67,7 +67,7 @@ def search_specific_pokemon_by_wiki(pokemon_name: str = '快龍') -> Union[FlexS
 
     if pokemon_row_list and len(pokemon_row_list) > 0:
         eng_name, poke_img = find_pokemon_image(pokemon_row_list)
-        logger.info(poke_img)
+        logger.debug(f'Pokemon image url" {poke_img}')
 
         with sqlite.connect() as con:
             poke_query: Dict[str, str] = sqlite.exec_one(

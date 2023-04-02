@@ -49,15 +49,9 @@ def pokemon_wiki(pokemon_name, language='zh'):
 
 
 def find_pokemon_image(pokemon_row_list: BeautifulSoup) -> Tuple[str, str]:
-    zh_name_url = pokemon_row_list.select('td')[2].findChild('a')['href']
     eng_name = pokemon_row_list.select('td')[7].text.rstrip()
-
-    poke_url = f'https://wiki.52poke.com{zh_name_url}'
-    logger.debug(f'Finding the pokemon image from {poke_url}...')
-    poke_res = requests.get(url=poke_url)
-    poke_soup = BeautifulSoup(poke_res.text, 'html.parser')
-    
-    poke_img = f'https://play.pokemonshowdown.com/sprites/gen5/{eng_name.lower()}.png'
+    poke_image_name = "".join(eng_name.replace("-", "")).lower()
+    poke_img = f'https://play.pokemonshowdown.com/sprites/gen5/{poke_image_name}.png'
     logger.debug(f'Pokemon image url is: {poke_img}')
     return eng_name, poke_img
 
