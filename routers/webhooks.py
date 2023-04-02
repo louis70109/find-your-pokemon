@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import List, Optional
+from typing import List, Optional, Union
 import re
 import requests
 from controller.find_pokemon import find_specific_pokemon_all_status, search_specific_pokemon_by_wiki
@@ -72,34 +72,42 @@ def message_text(event: MessageEvent) -> None:
 
 
 def get_pokemon_trending(url: str) -> FlexSendMessage:
-    r: requests.Response = requests.get(url=url)
-    soup: BeautifulSoup = BeautifulSoup(r.text, 'html.parser')
-    all_rank: List[BeautifulSoup] = soup.select('span.pokemon-name')
-    all_trending: List[BeautifulSoup] = soup.select(
-        '.float-right.margin-right-20')
+    try:
+        r: requests.Response = requests.get(url=url)
+        soup: BeautifulSoup = BeautifulSoup(r.text, 'html.parser')
+        all_rank: List[BeautifulSoup] = soup.select('span.pokemon-name')
+        all_trending: List[BeautifulSoup] = soup.select(
+            '.float-right.margin-right-20')
 
-    trending: List[List[str]] = []
-    for i in range(len(all_rank)):
-        en_name: str = all_rank[i].text.rstrip()
-        trend_percent: str = all_trending[i].text.rstrip()
-        trending.append([en_name, trend_percent])
+        trending: List[List[str]] = []
+        for i in range(len(all_rank)):
+            en_name: str = all_rank[i].text.rstrip()
+            trend_percent: str = all_trending[i].text.rstrip()
+            trending.append([en_name, trend_percent])
 
-    return FlexSendMessage(alt_text='賽季排行榜', contents=top_list('排行榜', trending))
+        return FlexSendMessage(alt_text='賽季排行榜', contents=top_list('排行榜', trending))
+    except Exception as e:
+        logger.warning(f'Get pokemon trending fails, see exception: {e}')
+        return TextSendMessage(text=f'想看更多趨勢？\n請看 {url}')
 
 
 def check_health() -> TextSendMessage:
-    # Healthy check by reply message
+    # Health check by reply message
     res: requests.Response = requests.get(os.getenv('HEAL_URL'))
     return TextSendMessage(str(res.json()))
 
 
-def get_pokemon_status(message: str) -> FlexSendMessage:
+def get_pokemon_status(message: str) -> Union[FlexSendMessage, TextSendMessage]:
     msg_split: List[str] = message.split(' ')
     name: str = msg_split[1].lower()
     if len(msg_split) == 3:
         name: str = f'{msg_split[1]} {msg_split[2]}'.lower()
-    contents: list = find_specific_pokemon_all_status(pokemon_name=name)
-    return FlexSendMessage(alt_text=name, contents={"type": "carousel", "contents": contents})
+    try:
+        contents: list = find_specific_pokemon_all_status(pokemon_name=name)
+        return FlexSendMessage(alt_text=name, contents={"type": "carousel", "contents": contents})
+    except Exception as e:
+        logger.error(f'Could not find specific pokemon status, see error: {e}')
+        return TextSendMessage('查無此寶可夢特性')
 
 
 def search_pokemon_wiki(pokemon_name: str) -> TextSendMessage:
