@@ -121,12 +121,12 @@ def search_pokemon_wiki(pokemon_name: str) -> TextSendMessage:
             logger.warning('Maybe OpenAI budget not enough.')
             logger.info(e)
             return """
-                - `heal`: 健康檢查
-                - `top`: 尋找最多人雙打使用的寶可夢
-                - `vgc`: 尋找組隊資訊
-                - `皮卡丘`: 手動輸入想找的寶可夢名字，尋找個體值
-                - `屬性`: 屬性剋制表
-                - `find pikachu`: 尋找對戰細節
+                - heal: 健康檢查
+                - top: 尋找最多人雙打使用的寶可夢
+                - vgc: 尋找組隊資訊
+                - 皮卡丘: 手動輸入想找的寶可夢名字，尋找個體值
+                - 屬性: 屬性剋制表
+                - find pikachu: 尋找對戰細節
             """
 
     return pokemon
