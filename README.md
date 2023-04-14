@@ -15,6 +15,15 @@
 
 <a href="https://lin.ee/hEm5lEq"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="加入好友" height="36" border="0"></a>
 
+### 指令
+
+- `heal`: 健康檢查
+- `top`: 尋找最多人雙打使用的寶可夢
+- `vgc`: 尋找組隊資訊
+- `皮卡丘`: 手動輸入想找的寶可夢名字，尋找個體值
+- `屬性`: 屬性剋制表
+- `find pikachu`: 尋找對戰細節
+
 ## 操作流程
 
 [操作流程](https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/bot-flow.png)

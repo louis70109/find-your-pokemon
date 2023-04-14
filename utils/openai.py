@@ -7,7 +7,6 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 def generate_random_image(pokemon: str) -> str:
-
     response = openai.Image.create(
         prompt=f"3D render of a cute pokemon of {pokemon} in an aquarium on a dark blue background, digital art",
         n=1,

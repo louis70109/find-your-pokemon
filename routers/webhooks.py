@@ -60,13 +60,14 @@ def message_text(event: MessageEvent) -> None:
         response: FlexSendMessage = get_pokemon_trending(url)
 
     elif message.lower() == 'heal':
+        # Health check
         response: TextSendMessage = check_health()
 
     elif re.findall('^find\s*.*\s*.*', message):
-        response: FlexSendMessage = get_pokemon_status(message)        
+        response: FlexSendMessage = get_pokemon_status(message)
     else:
         response: TextSendMessage = search_pokemon_wiki(message)
-    
+
     logger.debug(f'LINE bot response JSON: {str(response)}')
     line_bot_api.reply_message(event.reply_token, response)
 
@@ -113,7 +114,19 @@ def get_pokemon_status(message: str) -> Union[FlexSendMessage, TextSendMessage]:
 def search_pokemon_wiki(pokemon_name: str) -> TextSendMessage:
     pokemon = search_specific_pokemon_by_wiki(pokemon_name)
     if pokemon is None:
-        image_url = generate_random_image(pokemon=pokemon_name)
-        pokemon = ImageSendMessage(image_url, image_url)
+        try:
+            image_url = generate_random_image(pokemon=pokemon_name)
+            pokemon = ImageSendMessage(image_url, image_url)
+        except Exception as e:
+            logger.warning('Maybe OpenAI budget not enough.')
+            logger.info(e)
+            return """
+                - `heal`: 健康檢查
+                - `top`: 尋找最多人雙打使用的寶可夢
+                - `vgc`: 尋找組隊資訊
+                - `皮卡丘`: 手動輸入想找的寶可夢名字，尋找個體值
+                - `屬性`: 屬性剋制表
+                - `find pikachu`: 尋找對戰細節
+            """
 
     return pokemon
