@@ -1,6 +1,17 @@
 import requests
 import os
 from bs4 import BeautifulSoup
+import sys
+
+# 检查参数个数
+if len(sys.argv) < 2:
+    print("Usage: python script.py [arg1] [arg2] ...")
+    sys.exit(1)
+
+# 获取参数
+LINE_ADMIN = sys.argv[1]
+LINE_CHANNEL_ACCESS_TOKEN = sys.argv[2] if len(sys.argv) > 2 else None
+SERIES = 'gen9vgc2023regc'
 
 # 設定目標 URL
 url = 'https://www.pikalytics.com/pokedex'
@@ -22,9 +33,6 @@ value = optgroup.find('option')['value'].split('-')[0]
 
 print(f"Pokemon Scarlet & Violet 的 ID 為：{value}")
 
-LINE_CHANNEL_ACCESS_TOKEN = os.getenv('LINE_CHANNEL_ACCESS_TOKEN')
-LINE_ADMIN = os.getenv('LINE_ADMIN')
-SERIES = os.getenv('SERIES')
 r = requests.post(
     url='https://api.line.me/v2/bot/message/push',
     headers={
