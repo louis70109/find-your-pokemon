@@ -1,9 +1,9 @@
 name: Check pikalytic series
 
-on: [push]
-# on:
-#   schedule:
-#     - cron: '0 0 * * 1' # At 00:00 on Monday
+# on: [push]
+on:
+  schedule:
+    - cron: '0 0 * * 1' # At 00:00 on Monday
 
 jobs:
   build:
