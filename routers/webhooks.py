@@ -62,6 +62,19 @@ def message_text(event: MessageEvent) -> None:
     elif message.lower() == 'heal':
         # Health check
         response: TextSendMessage = check_health()
+    elif message.lower() == 'show':
+        response: TextSendMessage = TextSendMessage(
+            'https://play.pokemonshowdown.com/')
+    elif re.findall('^show\s*.*\s*.*', message.lower()):
+
+        msg_split: List[str] = message.split(' ')
+        name: str = msg_split[1].lower()
+        r = requests.get(f"https://replay.pokemonshowdown.com/search.json?user={name}&page=1")
+        length = len(r.json())
+        response_text = ''
+        for idx in range(length):
+            response_text += f"https://replay.pokemonshowdown.com/{str(r.json()[idx]['id'])}\n"
+        response: TextSendMessage = TextSendMessage(response_text)
 
     elif re.findall('^find\s*.*\s*.*', message):
         response: FlexSendMessage = get_pokemon_status(message)
