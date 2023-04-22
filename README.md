@@ -23,6 +23,8 @@
 - `皮卡丘`: 手動輸入想找的寶可夢名字，尋找個體值
 - `屬性`: 屬性剋制表
 - `find pikachu`: 尋找對戰細節
+- `show`: Pokemon Showdown 網站
+- `show 名字`: Pokemon Showdown 上的對戰紀錄
 
 ## 操作流程
 
@@ -80,9 +82,16 @@ curl http://localhost:5000/
 gcloud run deploy nijia-cloud-run-example-1 --source .
 ```
 
-## 想做還不知道怎麼做
+## GitHub Actions 設定
 
-- [ ] [引入計算機 LIFF](https://github.com/smogon/damage-calc)
+以下須在專案中設定的三個 secrets:
+
+> 路徑: 專案 > Settings > 左側 Secrets and Variables > Actions > Repository secrets 
+
+- SERVICE_URI: 週期確認賽季使用，GCP || 其他部署的 Domain + /season
+  - e.g. https://example.com/season
+- LINE_ADMIN: 要推給哪個管理者
+- LINE_CHANNEL_ACCESS_TOKEN: Chatbot 金鑰
 
 ## 想加入開發！
 
