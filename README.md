@@ -28,7 +28,7 @@
 
 ## 操作流程
 
-[操作流程](https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/bot-flow.png)
+![操作流程](https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/bot-flow.png)
 
 ## 開發環境
 
