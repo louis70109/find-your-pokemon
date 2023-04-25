@@ -10,7 +10,7 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import TextMessage, MessageEvent, ImageSendMessage, TextSendMessage, FlexSendMessage
 from pydantic import BaseModel
 from bs4 import BeautifulSoup
-from utils.flex import top_list
+from utils.flex import replay_flex, top_list
 from utils.openai import generate_random_image
 
 
@@ -69,12 +69,24 @@ def message_text(event: MessageEvent) -> None:
 
         msg_split: List[str] = message.split(' ')
         name: str = msg_split[1].lower()
-        r = requests.get(f"https://replay.pokemonshowdown.com/search.json?user={name}&page=1")
-        length = len(r.json())
-        response_text = ''
-        for idx in range(length):
-            response_text += f"https://replay.pokemonshowdown.com/{str(r.json()[idx]['id'])}\n"
-        response: TextSendMessage = TextSendMessage(response_text)
+        r = requests.get(
+            f"https://replay.pokemonshowdown.com/search.json?user={name}&page=1")
+        sd_user_record_length = len(r.json())
+        content = replay_flex(r.json(), sd_user_record_length)
+        contents = {"type": "carousel", "contents": content}
+        if content is None:
+            contents = {
+                "type": "bubble",
+                "body":
+                {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [{
+                        "type": "text",
+                        "text": f"太狠了，{name} 根本沒打"}]
+                }}
+        response: FlexSendMessage = FlexSendMessage(
+            alt_text=name, contents=contents)
 
     elif re.findall('^find\s*.*\s*.*', message):
         response: FlexSendMessage = get_pokemon_status(message)
