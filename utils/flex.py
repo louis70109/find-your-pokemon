@@ -440,8 +440,6 @@ def replay_flex(sd_user_record, sd_user_record_length):
     # [{"uploadtime":1682434022,"id":"gen9vgc2023regulationc-1851299369","format":"gen9vgc2023regulationc","p1":"picleopa","p2":"Nijiatw"}...]
     two_layer_bubble = {}
     one_layer_content, two_layer_content = [], []
-    if sd_user_record_length == 0:
-        return None
     for idx in range(sd_user_record_length):
         if idx >= 0 and idx < 5:
             one_layer_content.append({
@@ -450,7 +448,7 @@ def replay_flex(sd_user_record, sd_user_record_length):
                 "height": "sm",
                 "action": {
                     "type": "uri",
-                    "label": sd_user_record[idx]['uploadtime'],
+                    "label": "replay",
                     "uri": f"https://replay.pokemonshowdown.com/{sd_user_record[idx]['id']}"
                 }
             })
@@ -461,7 +459,7 @@ def replay_flex(sd_user_record, sd_user_record_length):
                 "height": "sm",
                 "action": {
                     "type": "uri",
-                    "label": sd_user_record[idx]['uploadtime'],
+                    "label": "replay",
                     "uri": f"https://replay.pokemonshowdown.com/{sd_user_record[idx]['id']}"
                 }
             })
@@ -491,7 +489,7 @@ def replay_flex(sd_user_record, sd_user_record_length):
                 "type": "bubble",
                 "hero": {
                     "type": "image",
-                    "url": "https://play.pokemonshowdown.com/sprites/gen5/charizard-megax.png",
+                    "url": "https://play.pokemonshowdown.com/sprites/gen5/greninja-ash.png",
                     "size": "xl",
                     "aspectMode": "cover",
                     "action": {

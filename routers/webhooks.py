@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 from typing import List, Optional, Union
@@ -72,9 +73,8 @@ def message_text(event: MessageEvent) -> None:
         r = requests.get(
             f"https://replay.pokemonshowdown.com/search.json?user={name}&page=1")
         sd_user_record_length = len(r.json())
-        content = replay_flex(r.json(), sd_user_record_length)
-        contents = {"type": "carousel", "contents": content}
-        if content is None:
+        
+        if sd_user_record_length == 0:
             contents = {
                 "type": "bubble",
                 "body":
@@ -85,8 +85,12 @@ def message_text(event: MessageEvent) -> None:
                         "type": "text",
                         "text": f"太狠了，{name} 根本沒打"}]
                 }}
+        else:
+            content = replay_flex(r.json(), sd_user_record_length)
+            contents = {"type": "carousel", "contents": content}
         response: FlexSendMessage = FlexSendMessage(
             alt_text=name, contents=contents)
+        
 
     elif re.findall('^find\s*.*\s*.*', message):
         response: FlexSendMessage = get_pokemon_status(message)
