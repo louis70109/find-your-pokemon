@@ -28,7 +28,7 @@ This is a Python project that can search for Pokemon from the official website a
 
 ## Operation process
 
-![Operation process](https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/bot-flow.png)
+![Operation process](https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/statics/bot-flow-zh.png)
 
 ## Development environment
 
