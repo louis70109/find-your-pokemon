@@ -1,44 +1,44 @@
-# 找不到寶可夢？用它來找！
+# Can't find Pokemon? Use it to find!
 
-這是一個 Python 專案，可以從官方網站和 SQLite 資料庫中尋找寶可夢。此外，該專案還提供了 LINE Bot 的功能，可以輸入`中文寶可夢名稱`並回傳相關的 Flex 訊息。
+This is a Python project that can search for Pokemon from the official website and SQLite database. In addition, the project also provides LINE Bot functionality, which can enter `Chinese Pokemon name` and return related Flex messages.
 
-- [中文寶可夢 wiki list](https://wiki.52poke.com/zh-hant/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E5%88%97%E8%A1%A8%EF%BC%88%E5%9C%A8%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E4%B8%AD%EF%BC%89)
-  - [參考檔案(python)](https://github.com/louis70109/find-your-pokemon/blob/main/pokemon_crawler.py)
-- 寶可夢 API:
+- [Chinese Pokemon wiki list](https://wiki.52poke.com/zh-hant/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E5%88%97%E8%A1%A8%EF%BC%88%E5%9C%A8%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E4%B8%AD%EF%BC%89)
+  - [Reference file (python)](https://github.com/louis70109/find-your-pokemon/blob/main/pokemon_crawler.py)
+- Pokemon API:
   - [JSON](https://play.pokemonshowdown.com/data/pokedex.json)
-  - [來源](https://github.com/smogon/pokemon-showdown-client/blob/master/WEB-API.md)
-- [招式對應清單](https://pokemon.fantasticmao.cn/pokemon/list)
-  - [GitHub 清單](https://github.com/fantasticmao/pokemon-wiki/blob/master/apiDoc/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3.md)
-- [寶可夢傳統風格照片庫](https://play.pokemonshowdown.com/sprites/gen5/)
+  - [Source](https://github.com/smogon/pokemon-showdown-client/blob/master/WEB-API.md)
+- [Move correspondence list](https://pokemon.fantasticmao.cn/pokemon/list)
+  - [GitHub list](https://github.com/fantasticmao/pokemon-wiki/blob/master/apiDoc/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3.md)
+- [Pokemon traditional style photo library](https://play.pokemonshowdown.com/sprites/gen5/)
 
-## 加入好友
+## Add LINE Bot friends
 
-<a href="https://lin.ee/hEm5lEq"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="加入好友" height="36" border="0"></a>
+<a href="https://lin.ee/hEm5lEq"><img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="Add friends" height="36" border="0"></a>
 
-### 指令
+### Instructions
 
-- `heal`: 健康檢查
-- `top`: 尋找最多人雙打使用的寶可夢
-- `vgc`: 尋找組隊資訊
-- `皮卡丘`: 手動輸入想找的寶可夢名字，尋找個體值
-- `屬性`: 屬性剋制表
-- `find pikachu`: 尋找對戰細節
-- `show`: Pokemon Showdown 網站
-- `show 名字`: Pokemon Showdown 上的對戰紀錄
+- `heal`: Health check
+- `top`: Find the most used Pokemon in doubles
+- `vgc`: Find team information
+- `皮卡丘`: Manually enter the name of the Pokemon you want to find and find its individual value
+- `屬性`: Attribute restraint table
+- `find pikachu`: Find battle details
+- `show`: Pokemon Showdown website
+- `show name`: Battle record on Pokemon Showdown
 
-## 操作流程
+## Operation process
 
-![操作流程](https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/bot-flow.png)
+![Operation process](https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/bot-flow.png)
 
-## 開發環境
+## Development environment
 
-在開始使用專案之前，需要確認您已經安裝了以下工具和套件:
+Before you start using the project, you need to make sure you have installed the following tools and packages:
 
-- Python 3.6 或以上版本
+- Python 3.6 or above
 - pip
 - LINE 7.13
 
-## 如何開發
+## How to develop
 
 ```sh
 mv .env.sample .env // fill the LINE_CHANNEL_ACCESS_TOKEN and LINE_CHANNEL_SECRET
@@ -46,7 +46,7 @@ pip3 install -r requirements.txt
 python3 main.py
 ```
 
-### 環境變數
+### Environment variables
 
 - API_ENV=develop
   - develop -> reload
@@ -54,101 +54,101 @@ python3 main.py
 - LINE_CHANNEL_SECRET=
   - LINE Bot Key
 - SERIES=gen9vgc2023series1
-  - 寶可夢賽季，從[這邊找賽季](https://www.pikalytics.com/pokedex)
+  - Pokemon season, find the season from [here](https://www.pikalytics.com/pokedex)
 
-## 建立暫時的 https
+## Create temporary https
 
-1. 開第一個終端機
+1. Open the first terminal
 
 ```
 ngrok http 8080
 ```
 
-2. 開另一個終端機
+2. Open another terminal
 
 ```shell
 sh change_bot_url.sh LINE_BOT_TOKEN https://NGROK_URL/webhooks/line
 ```
 
-## 健康檢查
+## Health check
 
 ```shell
 curl http://localhost:5000/
 ```
 
-## 部署部署！！
+## Deploy deploy!!
 
 ```shell
 gcloud run deploy nijia-cloud-run-example-1 --source .
 ```
 
-## GitHub Actions 設定
+## GitHub Actions settings
 
-以下須在專案中設定的三個 secrets:
+The following three secrets need to be set in the project:
 
-> 路徑: 專案 > Settings > 左側 Secrets and Variables > Actions > Repository secrets 
+> Path: Project > Settings > Left side Secrets and Variables > Actions > Repository secrets
 
-- SERVICE_URI: 週期確認賽季使用，GCP || 其他部署的 Domain + /season
+- SERVICE_URI: Periodic check season use, GCP || Other deployed Domain + /season
   - e.g. https://example.com/season
-- LINE_ADMIN: 要推給哪個管理者
-- LINE_CHANNEL_ACCESS_TOKEN: Chatbot 金鑰
+- LINE_ADMIN: Who to push to which administrator
+- LINE_CHANNEL_ACCESS_TOKEN: Chatbot key
 
-## 想加入開發！
+## Want to join development!
 
-感謝您有興趣參與我們的專案開發！
+Thank you for your interest in participating in our project development!
 
-以下是參與開發並提交 Pull Request 的步驟：
+The following are the steps to participate in development and submit a Pull Request:
 
-### Fork 專案
+### Fork project
 
-在專案頁面右上角點擊「Fork」，即可將本專案複製到您的帳戶下。
+Click "Fork" in the upper right corner of the project page to copy this project to your account.
 
-### Clone 專案
+### Clone project
 
-在您的 GitHub 下的專案中，點擊「Clone or download」並複製該專案的 URL。然後在終端機中執行以下命令：
+In your GitHub project, click "Clone or download" and copy the URL of the project. Then execute the following command in the terminal:
 
 ```
 git clone https://github.com/louis70109/find-your-pokemon.git
 ```
 
-在您的本地環境中安裝必要的套件
+Install the necessary packages in your local environment
 
 ```
 pip install -r requirements.txt
 ```
 
-在修改程式碼之前，創建一個新的分支
+Create a new branch before modifying the code
 
 ```
 git checkout -b my_new_feature
 ```
 
-在您的本地開發環境中進行修改
+Make modifications in your local development environment
 
-使用您熟悉的編輯器或 IDE 開始編輯。
+Start editing with your familiar editor or IDE.
 
-### 提交修改
+### Submit modifications
 
-當您完成編輯並且確信修改代碼無誤後，使用以下命令提交您的修改：
+When you have finished editing and are sure that the modified code is error-free, use the following command to submit your modifications:
 
 ```
 git add .
 git commit -m "Add my feature"
 ```
 
-### 推送分支
+### Push branch
 
-使用以下命令將您的分支推送到 GitHub 上：
+Use the following command to push your branch to GitHub:
 
 ```
 git push origin my-feature
 ```
 
-### 提交 Pull Request
+### Submit Pull Request
 
-當您的分支推送到您的 GitHub 帳戶後，請在專案頁面中點擊「Compare & pull request」，然後填寫必要的訊息以提交 Pull Request。我們會盡快審核您的修改，並在必要時與您進行討論。
+After pushing your branch to your GitHub account, please click "Compare & pull request" on the project page and fill in the necessary information to submit a Pull Request. We will review your modifications as soon as possible and discuss with you if necessary.
 
-感謝您的貢獻！如果您有任何問題，請隨時在 Pull Request 中進行提問，我將盡快回答您的問題。
+Thank you for your contribution! If you have any questions, please feel free to ask them in the Pull Request and I will answer them as soon as possible.
 
 ## LICENSE
 
