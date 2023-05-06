@@ -98,7 +98,7 @@ def specific_flex(
                         },
                         {
                             "type": "text",
-                            "text": f"攻擊: {body['attack']}",
+                            "text": f"ATK: {body['attack']}",
                             "color": "#ffffff",
                             "align": "start",
                             "size": "xs",
@@ -128,7 +128,7 @@ def specific_flex(
                         },
                         {
                             "type": "text",
-                            "text": f"防禦：{body['defense']}",
+                            "text": f"DEF：{body['defense']}",
                             "color": "#ffffff",
                             "align": "start",
                             "size": "xs",
@@ -158,7 +158,7 @@ def specific_flex(
                         },
                         {
                             "type": "text",
-                            "text": f"特攻：{body['sp_attack']}",
+                            "text": f"SPA：{body['sp_attack']}",
                             "color": "#ffffff",
                             "align": "start",
                             "size": "xs",
@@ -188,7 +188,7 @@ def specific_flex(
                         },
                         {
                             "type": "text",
-                            "text": f"特防：{body['sp_defense']}",
+                            "text": f"SPD：{body['sp_defense']}",
                             "color": "#ffffff",
                             "align": "start",
                             "size": "xs",
@@ -218,7 +218,7 @@ def specific_flex(
                         },
                         {
                             "type": "text",
-                            "text": f"速度：{body['speed']}",
+                            "text": f"SPE：{body['speed']}",
                             "color": "#ffffff",
                             "align": "start",
                             "size": "xs",
@@ -247,7 +247,7 @@ def specific_flex(
                             "margin": "sm"
                         },                        {
                             "type": "text",
-                            "text": f"總和：{body['total']}",
+                            "text": f"Total：{body['total']}",
                             "color": "#ffffff",
                             "align": "start",
                             "size": "lg",
@@ -268,7 +268,7 @@ def specific_flex(
                             "type": "button",
                             "action": {
                                 "type": "message",
-                                "label": "細節",
+                                "label": "Details",
                                 "text": f"find {name[1]}"
                             },
                             "style": "primary"
@@ -295,6 +295,7 @@ def top_list(name="Pokemon", abilities: list = [[]]):
         "size": "xl"
     }]
     for ability in abilities:
+        # TODO: Use Language() to judge language.
         pokemon, _ = find_pokemon_name(ability[0])
         logger.debug(f'ZH-hant name and type are: {pokemon}, {ability[1]}')
         action = {

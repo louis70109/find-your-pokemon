@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 from typing import List, Optional, Union
@@ -48,7 +47,7 @@ def message_text(event: MessageEvent) -> None:
     message: str = event.message.text
     logger.debug(f'LINE Bot reply message is: {message}')
 
-    if message == '屬性':
+    if message.lower() in ['屬性', 'type', 'タイプ']:
         image_url: str = 'https://raw.githubusercontent.com/louis70109/find-your-pokemon/main/pokemon.jpg'
         response: ImageSendMessage = ImageSendMessage(image_url, image_url)
 
@@ -67,13 +66,12 @@ def message_text(event: MessageEvent) -> None:
         response: TextSendMessage = TextSendMessage(
             'https://play.pokemonshowdown.com/')
     elif re.findall('^show\s*.*\s*.*', message.lower()):
-
         msg_split: List[str] = message.split(' ')
         name: str = msg_split[1].lower()
         r = requests.get(
             f"https://replay.pokemonshowdown.com/search.json?user={name}&page=1")
         sd_user_record_length = len(r.json())
-        
+
         if sd_user_record_length == 0:
             contents = {
                 "type": "bubble",
@@ -90,8 +88,6 @@ def message_text(event: MessageEvent) -> None:
             contents = {"type": "carousel", "contents": content}
         response: FlexSendMessage = FlexSendMessage(
             alt_text=name, contents=contents)
-        
-
     elif re.findall('^find\s*.*\s*.*', message):
         response: FlexSendMessage = get_pokemon_status(message)
     else:
@@ -133,8 +129,11 @@ def get_pokemon_status(message: str) -> Union[FlexSendMessage, TextSendMessage]:
     if len(msg_split) == 3:
         name: str = f'{msg_split[1]} {msg_split[2]}'.lower()
     try:
-        contents: list = find_specific_pokemon_all_status(pokemon_name=name)
-        return FlexSendMessage(alt_text=name, contents={"type": "carousel", "contents": contents})
+        series_contents: list = find_specific_pokemon_all_status(pokemon_name=name)
+
+        return FlexSendMessage(
+            alt_text=name,
+            contents={"type": "carousel", "contents": series_contents})
     except Exception as e:
         logger.error(f'Could not find specific pokemon status, see error: {e}')
         return TextSendMessage('查無此寶可夢特性')

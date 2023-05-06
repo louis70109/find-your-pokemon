@@ -16,18 +16,13 @@ def find_pokemon_name(pokemon_name):
     if not result:
         logger.info('Could not find TW name: ' + pokemon_name)
         return pokemon_name, None
-        # with sqlite.connect() as con:
-        #     item_query = sqlite.exec(con,
-        #     f"SELECT name_zh FROM t_pokemon WHERE name_en == '{pokemon_name}'")
-        #     logger.info('Could not find TW name, query from Sqlite: '+ str(item_query))
-        #     return item_query[0]
     else:
         return result[0]['pokemon_name'], result[0]['pokemon_type_name']
 
 
 def pokemon_wiki(pokemon_name, language='zh'):
     url = "https://wiki.52poke.com/{}/{}".format(
-        'zh-hant' if language == 'zh' else 'en',
+        'zh-hant',
         '%E5%AE%9D%E5%8F%AF%E6%A2%A6%E5%88%97%E8%A1%A8%EF%BC%88%E5%9C%A8%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E4%B8%AD%EF%BC%89')
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -37,6 +32,8 @@ def pokemon_wiki(pokemon_name, language='zh'):
     for row in pokemon_rows:
         if language == 'en':
             name = row.select('td')[7].text
+        elif language == 'jp':
+            name = row.select('td')[6].text
         else:
             name = row.select('td')[2].text
 
