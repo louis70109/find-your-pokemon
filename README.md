@@ -1,15 +1,7 @@
 # Can't find Pokemon? Use it to find!
 
-This is a Python project that can search for Pokemon from the official website and SQLite database. In addition, the project also provides LINE Bot functionality, which can enter `Chinese Pokemon name` and return related Flex messages.
+This is a Python project that can search for Pokemon from the official website and SQLite database. In addition, the project also provides LINE Bot functionality, which can enter `Chinese` || `English` || `Japanese` Pokemon name and return related Flex messages.
 
-- [Chinese Pokemon wiki list](https://wiki.52poke.com/zh-hant/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E5%88%97%E8%A1%A8%EF%BC%88%E5%9C%A8%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E4%B8%AD%EF%BC%89)
-  - [Reference file (python)](https://github.com/louis70109/find-your-pokemon/blob/main/pokemon_crawler.py)
-- Pokemon API:
-  - [JSON](https://play.pokemonshowdown.com/data/pokedex.json)
-  - [Source](https://github.com/smogon/pokemon-showdown-client/blob/master/WEB-API.md)
-- [Move correspondence list](https://pokemon.fantasticmao.cn/pokemon/list)
-  - [GitHub list](https://github.com/fantasticmao/pokemon-wiki/blob/master/apiDoc/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3.md)
-- [Pokemon traditional style photo library](https://play.pokemonshowdown.com/sprites/gen5/)
 
 ## Add LINE Bot friends
 
@@ -20,7 +12,7 @@ This is a Python project that can search for Pokemon from the official website a
 - `heal`: Health check
 - `top`: Find the most used Pokemon in doubles
 - `vgc`: Find team information
-- `皮卡丘`: Manually enter the name of the Pokemon you want to find and find its individual value
+- `自爆磁怪` || `ジバコイル` || `Magnezone`: Manually enter the name of the Pokemon you want to find and find its individual value
 - `屬性`: Attribute restraint table
 - `find pikachu`: Find battle details
 - `show`: Pokemon Showdown website
@@ -149,6 +141,18 @@ git push origin my-feature
 After pushing your branch to your GitHub account, please click "Compare & pull request" on the project page and fill in the necessary information to submit a Pull Request. We will review your modifications as soon as possible and discuss with you if necessary.
 
 Thank you for your contribution! If you have any questions, please feel free to ask them in the Pull Request and I will answer them as soon as possible.
+
+## References
+
+- [Chinese Pokemon wiki list](https://wiki.52poke.com/zh-hant/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E5%88%97%E8%A1%A8%EF%BC%88%E5%9C%A8%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E4%B8%AD%EF%BC%89)
+  - [Reference file (python)](https://github.com/louis70109/find-your-pokemon/blob/main/pokemon_crawler.py)
+- Pokemon API:
+  - [JSON](https://play.pokemonshowdown.com/data/pokedex.json)
+  - [Source](https://github.com/smogon/pokemon-showdown-client/blob/master/WEB-API.md)
+- [Move correspondence list](https://pokemon.fantasticmao.cn/pokemon/list)
+  - [GitHub list](https://github.com/fantasticmao/pokemon-wiki/blob/master/apiDoc/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3.md)
+- [Pokemon traditional style photo library](https://play.pokemonshowdown.com/sprites/gen5/)
+- [Pokemon GIF from Showdown](https://pkmn.github.io/ps/img/)
 
 ## LICENSE
 
