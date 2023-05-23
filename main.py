@@ -10,12 +10,29 @@ import uvicorn
 import requests
 from fastapi import FastAPI
 from fastapi.templating import Jinja2Templates
-
+import tempfile
 from routers import webhooks
+
 
 app = FastAPI()
 logging.basicConfig(level=os.getenv('LOG', 'INFO'))
+logger = logging.getLogger(__file__)
+
 templates = Jinja2Templates(directory="templates")
+
+# Read Firebase cert from env variable JSON string
+firebase_cred = tempfile.NamedTemporaryFile(suffix='.json')
+try:
+    GOOGLE_KEY = os.environ.get('FIREBASE_CRED', '{}')
+    firebase_cred.write(GOOGLE_KEY.encode())
+    firebase_cred.seek(0)
+    os.environ['FIREBASE_CREDENTIALS'] = firebase_cred.name
+    logger.debug(os.environ['FIREBASE_CREDENTIALS'])
+except Exception as e:
+    logger.error('Firebase key write fail.')
+    logger.error(e)
+    firebase_cred.close()
+
 
 app.include_router(webhooks.router)
 

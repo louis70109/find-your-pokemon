@@ -21,3 +21,4 @@ var/
 .DS_Store
 .tox/
 pokemon_wiki.db-journal
+firebase.json
