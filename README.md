@@ -13,8 +13,8 @@ This is a Python project that can search for Pokemon from the official website a
 - `top`: Find the most used Pokemon in doubles
 - `vgc`: Find team information
 - `自爆磁怪` || `ジバコイル` || `Magnezone`: Manually enter the name of the Pokemon you want to find and find its individual value
-- `屬性`: Attribute restraint table
-- `find pikachu`: Find battle details
+-  [`屬性`, `type`, `タイプ`]: Attribute restraint table
+- `find Magnezone`: Find battle details
 - `show`: Pokemon Showdown website
 - `show name`: Battle record on Pokemon Showdown
 
