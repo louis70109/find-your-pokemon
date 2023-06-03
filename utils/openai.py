@@ -8,9 +8,9 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def generate_random_image(pokemon: str) -> str:
     response = openai.Image.create(
-        prompt=f"{pokemon}, Japon cine, Japan cine poster 1985, realistic --ar 15:22",
+        prompt=f"anime cel, celluloid, {pokemon}",
         n=1,
-        size="1024x1024"
+        size="960x960"
     )
     logger.debug('OpenAI URL is: %s', response['data'][0]['url'])
     return response['data'][0]['url']
