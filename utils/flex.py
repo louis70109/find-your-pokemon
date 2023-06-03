@@ -21,6 +21,42 @@ def specific_flex(
                 "type": "bubble",
                 "size": "mega",
                 "direction": "ltr",
+                "header": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                        {
+                            "type": "box",
+                            "layout": "horizontal",
+                            "contents": [
+                                {
+                                    "type": "text",
+                                    "text": "AI",
+                                    "size": "sm",
+                                    "color": "#ffffff",
+                                    "align": "center",
+                                    "gravity": "center",
+                                    "action": {
+                                        "type": "message",
+                                        "label": "Image Gen",
+                                        "text": f":draw {name[1]}"
+                                    }
+                                }
+                            ],
+                            "backgroundColor": "#EC3D44",
+                            "paddingAll": "2px",
+                            "paddingStart": "4px",
+                            "paddingEnd": "4px",
+                            "flex": 0,
+                            "position": "absolute",
+                            "offsetTop": "18px",
+                            "width": "48px",
+                            "height": "23px",
+                            "offsetStart": "18px",
+                            "cornerRadius": "100px"
+                        }
+                    ]
+                },
                 "hero": {
                     "type": "image",
                     "url": image,
