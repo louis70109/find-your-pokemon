@@ -90,6 +90,10 @@ def message_text(event: MessageEvent) -> None:
             alt_text=name, contents=contents)
     elif re.findall('^find\s*.*\s*.*', message):
         response: FlexSendMessage = get_pokemon_status(message)
+    elif re.findall('^:draw\s*.*\s*.*', message):
+        msg_split: List[str] = message.split(' ')
+        image_url = generate_random_image(msg_split[1])
+        response: ImageSendMessage = ImageSendMessage(image_url, image_url)
     else:
         response: TextSendMessage = search_pokemon_wiki(message)
 
