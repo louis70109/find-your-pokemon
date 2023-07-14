@@ -1,9 +1,15 @@
-name: PR
+# .github/workflows/auto-author-assign.yml
+name: Auto Author Assign
+
 on:
-  pull_request:
+  pull_request_target:
+    types: [ opened, reopened ]
+
+permissions:
+  pull-requests: write
+
 jobs:
   assign-author:
-    name: Assign Author
     runs-on: ubuntu-latest
     steps:
       - uses: toshimaru/auto-author-assign@v1.6.2
