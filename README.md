@@ -1,4 +1,4 @@
-# Can't find Pokemon? Use it to find!
+# Can't find Pokemon? Use it to find!!
 
 This is a Python project that can search for Pokemon from the official website and SQLite database. In addition, the project also provides LINE Bot functionality, which can enter `Chinese` || `English` || `Japanese` Pokemon name and return related Flex messages.
 
