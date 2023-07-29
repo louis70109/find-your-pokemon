@@ -45,7 +45,7 @@ python3 main.py
 - LINE_CHANNEL_ACCESS_TOKEN=
 - LINE_CHANNEL_SECRET=
   - LINE Bot Key
-- SERIES=gen9vgc2023series1
+- SERIES=gen9vgc2023regd
   - Pokemon season, find the season from [here](https://www.pikalytics.com/pokedex)
 
 ## Create temporary https
